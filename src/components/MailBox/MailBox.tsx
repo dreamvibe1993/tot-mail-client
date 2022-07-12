@@ -7,10 +7,10 @@ import { LetterTab } from "../Letter/LetterTab";
 import { ServiceButton } from "../UI/Buttons/ServiceButton/ServiceButton";
 
 import { BsReplyFill, BsThreeDotsVertical } from "react-icons/bs";
-import { Mailboxes } from "../../models/types/enums/mailboxes";
+import { MailboxSections } from "../../models/types/enums/mailboxes";
 
 interface MailBoxProps {
-  type: Mailboxes;
+  type: MailboxSections;
 }
 
 export const MailBox: React.FC<MailBoxProps> = ({ type }) => {
@@ -21,11 +21,11 @@ export const MailBox: React.FC<MailBoxProps> = ({ type }) => {
   const [mail, setMail] = React.useState<Array<Letter>>([]);
 
   React.useEffect(() => {
-    if (type === Mailboxes.incoming) setMail(incoming);
-    if (type === Mailboxes.sent) setMail(sent);
-    if (type === Mailboxes.deleted) setMail(deleted);
-    if (type === Mailboxes.drafts) setMail(drafts);
-    if (type === Mailboxes.spam) setMail(spam);
+    if (type === MailboxSections.incoming) setMail(incoming.letters);
+    if (type === MailboxSections.sent) setMail(sent.letters);
+    if (type === MailboxSections.deleted) setMail(deleted.letters);
+    if (type === MailboxSections.drafts) setMail(drafts.letters);
+    if (type === MailboxSections.spam) setMail(spam.letters);
   }, [deleted, drafts, incoming, sent, spam, type]);
 
   if (!mail.length) return <span>No mail yet!</span>;

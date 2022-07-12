@@ -1,59 +1,90 @@
 import React from "react";
 import styled from "styled-components";
-import { Route, Switch, useRouteMatch } from "react-router";
+import { useRouteMatch } from "react-router";
 import { Link } from "react-router-dom";
 
-import { MailBox } from "../MailBox/MailBox";
-import { Letter } from "../Letter/Letter";
-import { Mailboxes } from "../../models/types/enums/mailboxes";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks/hooks";
+import { ServiceButton } from "../UI/Buttons/ServiceButton/ServiceButton";
+import { ServiceInput } from "../UI/Inputs/ServiceInput";
+import { mailboxActions } from "../../redux/reducers/mailbox/mailboxSlice";
+import { MailClientRoutes } from "../../configs/routes/mail-client-routes";
 
 export const MailClient: React.FC = () => {
-  const { path, url } = useRouteMatch();
-  
+  const { url } = useRouteMatch();
+  const mailboxSections = useAppSelector((state) => state.mailbox);
+  const dispatch = useAppDispatch();
+
+  const [newSectionName, setNewSectionName] = React.useState<string>("");
+
+  const [isSectionNameInputOpen, setSectionNameInputOpen] =
+    React.useState<boolean>(false);
+
+  function openSectionNameInput(): void {
+    setSectionNameInputOpen(true);
+  }
+
+  function addNewSection(): void {
+    const { customSections } = mailboxSections;
+    const nonUniqueSection = customSections.find(
+      (section: MailboxSection) => section.name === newSectionName
+    );
+    if (nonUniqueSection) {
+      return console.error(`Section called ${newSectionName} already exists!`);
+    }
+    dispatch(mailboxActions.addSection({ name: newSectionName }));
+    setSectionNameInputOpen(false);
+  }
+
   return (
     <MailClientContainer>
       <Drawer>
-        <Link to={`${url}/incoming`}>
-          <Tab>ВХОДЯЩИЕ</Tab>
-        </Link>
-        <Link to={`${url}/sent`}>
-          <Tab>ОТПРАВЛЕННЫЕ</Tab>
-        </Link>
-        <Link to={`${url}/drafts`}>
-          <Tab>ЧЕРНОВИКИ</Tab>
-        </Link>
-        <Link to={`${url}/deleted`}>
-          <Tab>УДАЛЕННЫЕ</Tab>
-        </Link>
-        <Link to={`${url}/spam`}>
-          <Tab>СПАМ</Tab>
-        </Link>
+        {Object.values(mailboxSections).map(
+          (section: MailboxSection) =>
+            !Array.isArray(section) && (
+              <Link key={section.id} to={`${url}/${section.slug}`}>
+                <Tab>{section.name}</Tab>
+              </Link>
+            )
+        )}
+        <hr />
+        <ServiceButton onClick={openSectionNameInput}>+ создать</ServiceButton>
+        {isSectionNameInputOpen && (
+          <SectionNameInputContainer>
+            <ServiceInput
+              type="text"
+              placeholder="Type new section name"
+              value={newSectionName}
+              onChange={(e) => setNewSectionName(e.target.value)}
+            />
+            <ServiceButton onClick={addNewSection}>сохранить</ServiceButton>
+          </SectionNameInputContainer>
+        )}
+        {mailboxSections.customSections.map((section: MailboxSection) => (
+          <Link key={section.id} to={`${url}/${section.slug}`}>
+            <Tab>{section.name}</Tab>
+          </Link>
+        ))}
       </Drawer>
       <Client>
-        <Switch>
-          <Route path={`${path}/incoming`} exact={true}>
-            <MailBox type={Mailboxes.incoming} />
-          </Route>
-          <Route path={`${path}/sent`} exact={true}>
-            <MailBox type={Mailboxes.sent} />
-          </Route>
-          <Route path={`${path}/deleted`} exact={true}>
-            <MailBox type={Mailboxes.deleted} />
-          </Route>
-          <Route path={`${path}/drafts`} exact={true}>
-            <MailBox type={Mailboxes.drafts} />
-          </Route>
-          <Route path={`${path}/spam`} exact={true}>
-            <MailBox type={Mailboxes.spam} />
-          </Route>
-          <Route path={`${path}/incoming/:id`} exact={true}>
-            <Letter />
-          </Route>
-        </Switch>
+        <MailClientRoutes />
       </Client>
     </MailClientContainer>
   );
 };
+
+const SectionNameInputContainer = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: stretch;
+  overflow: hidden;
+  button {
+    width: 30%;
+  }
+  input {
+    width: 70%;
+    margin-right: 1rem;
+  }
+`;
 
 const Client = styled.div`
   grid-area: scrn;

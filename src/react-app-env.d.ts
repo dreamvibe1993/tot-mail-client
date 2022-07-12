@@ -1,6 +1,6 @@
 /// <reference types="react-scripts" />
 
-interface MailerState {
-  mail: [];
+interface Action {
+  payload: any;
+  type: string;
 }
-

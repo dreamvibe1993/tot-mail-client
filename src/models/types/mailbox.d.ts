@@ -1,7 +1,15 @@
+interface MailboxSection {
+  name: string;
+  id: string;
+  letters: Array<Letter> | Array;
+  slug: string;
+}
+
 interface MailboxInitialState {
-  incoming: Array<Letter> | Array;
-  sent: Array<Letter> | Array;
-  drafts: Array<Letter> | Array;
-  deleted: Array<Letter> | Array;
-  spam: Array<Letter> | Array;
+  incoming: MailboxSection;
+  sent: MailboxSection;
+  drafts: MailboxSection;
+  deleted: MailboxSection;
+  spam: MailboxSection;
+  customSections: Array<MailboxSection> | Array;
 }

@@ -1,46 +1,23 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { letters } from "../../../assets/json";
-import { Mailboxes } from "../../../models/types/enums/mailboxes";
+import { letterActions } from "../../actions/letters/letter-actions";
+import { sectionActions } from "../../actions/sections/section-actions";
 
 const initialState: MailboxInitialState = {
-  incoming: letters,
-  sent: letters,
-  drafts: letters,
-  deleted: letters,
-  spam: letters,
+  incoming: { name: "входящие", id: "incoming-0", letters, slug: "incoming" },
+  sent: { name: "отправленные", id: "sent-0", letters, slug: "sent" },
+  drafts: { name: "черновики", id: "drafts-0", letters, slug: "drafts" },
+  deleted: { name: "удаленные", id: "deleted-0", letters, slug: "deleted" },
+  spam: { name: "спам", id: "spam-0", letters, slug: "spam" },
+  customSections: [],
 };
 
 export const mailboxSlice = createSlice({
   name: "mailbox",
   initialState,
   reducers: {
-    delete: (state, action) => {
-      if (action.payload.mailbox === Mailboxes.incoming) {
-        state.incoming = state.incoming.filter(
-          (letter: Letter) => letter.id !== action.payload.id
-        );
-      }
-      if (action.payload.mailbox === Mailboxes.sent) {
-        state.sent = state.sent.filter(
-          (letter: Letter) => letter.id !== action.payload.id
-        );
-      }
-      if (action.payload.mailbox === Mailboxes.drafts) {
-        state.drafts = state.drafts.filter(
-          (letter: Letter) => letter.id !== action.payload.id
-        );
-      }
-      if (action.payload.mailbox === Mailboxes.deleted) {
-        state.deleted = state.deleted.filter(
-          (letter: Letter) => letter.id !== action.payload.id
-        );
-      }
-      if (action.payload.mailbox === Mailboxes.spam) {
-        state.spam = state.spam.filter(
-          (letter: Letter) => letter.id !== action.payload.id
-        );
-      }
-    },
+    ...letterActions,
+    ...sectionActions,
   },
 });
 

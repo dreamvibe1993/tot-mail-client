@@ -5,12 +5,12 @@ import { SpanWithOverflow } from "../UI/Spans/SpanWithOverflow";
 import { Link, useRouteMatch } from "react-router-dom";
 import { useAppDispatch } from "../../redux/hooks/hooks";
 import { mailboxActions } from "../../redux/reducers/mailbox/mailboxSlice";
-import { Mailboxes } from "../../models/types/enums/mailboxes";
+import { MailboxSections } from "../../models/types/enums/mailboxes";
 import { CursorWrap } from "../UI/Wraps/CursorWrap";
 
 interface LetterTabProps {
   letter: Letter;
-  mailbox: Mailboxes;
+  mailbox: MailboxSections;
 }
 
 export const LetterTab: React.FC<LetterTabProps> = ({ letter, mailbox }) => {
@@ -18,7 +18,7 @@ export const LetterTab: React.FC<LetterTabProps> = ({ letter, mailbox }) => {
   const { url } = useRouteMatch();
 
   function deleteLetter(): void {
-    dispatch(mailboxActions.delete({ id: letter.id, mailbox }));
+    dispatch(mailboxActions.deleteLetter({ id: letter.id, mailbox }));
   }
 
   if (!letter) return null;

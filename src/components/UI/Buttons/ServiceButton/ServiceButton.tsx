@@ -6,4 +6,8 @@ export const ServiceButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
+  
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 `;
