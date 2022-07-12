@@ -1,0 +1,15 @@
+{
+  "id": "letter-1",
+  "sender": {
+    "name": "Jane Doe",
+    "email": "jane@doe.ua"
+  },
+  "recipient": {
+    "name": "John Doe",
+    "email": "john@doe.uk"
+  },
+  "sentAt": "2022-07-12T08:19:34.336Z",
+  "receivedAt": "2022-07-12T08:19:34.336Z",
+  "topic": "Happy birthday",
+  "message": "# Hey John! \nEiusmod eu nisi ullamco quis do. Consectetur laborum consectetur culpa ullamco enim cupidatat amet. \nUllamco veniam ad consequat aliquip occaecat esse ut quis enim nostrud et ex sint elit."
+}

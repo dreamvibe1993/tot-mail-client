@@ -1,0 +1,15 @@
+{
+  "id": "letter-3",
+  "sender": {
+    "name": "Jeebs Doe",
+    "email": "keke@doe.ua"
+  },
+  "recipient": {
+    "name": "Tony Doe",
+    "email": "kiki@doe.uk"
+  },
+  "sentAt": "2022-07-12T08:19:34.336Z",
+  "receivedAt": "2022-07-12T08:19:34.336Z",
+  "topic": "Happy lnawifugna!",
+  "message": "# Hey John! \nEiusmod eu nisi ullamco quis do. Consectetur laborum consectetur culpa ullamco enim cupidatat amet. \nUllamco veniam ad consequat aliquip occaecat esse ut quis enim nostrud et ex sint elit."
+}

@@ -1,0 +1,15 @@
+{
+  "id": "letter-4",
+  "sender": {
+    "name": "Bar Doe",
+    "email": "Bar@doe.ua"
+  },
+  "recipient": {
+    "name": "Baz Doe",
+    "email": "Baz@doe.uk"
+  },
+  "sentAt": "2022-07-12T08:19:34.336Z",
+  "receivedAt": "2022-07-12T08:19:34.336Z",
+  "topic": "Happy sadness!",
+  "message": "# Hey Anthony! \nEiusmod eu nisi ullamco quis do. Consectetur laborum consectetur culpa ullamco enim cupidatat amet. \nUllamco veniam ad consequat aliquip occaecat esse ut quis enim nostrud et ex sint elit."
+}
