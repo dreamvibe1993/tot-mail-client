@@ -12,7 +12,9 @@ import "./App.css";
 import { MailClient } from "./components/MailClient/MailClient";
 
 /**
- * TODO: check types 
+ * TODO: 
+ * кнопку назад из письма
+ * имя даже если нет почты
  */
 
 function App() {

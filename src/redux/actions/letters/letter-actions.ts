@@ -3,39 +3,40 @@ import { MailboxSections } from "../../../models/types/enums/mailboxes";
 export const letterActions = {
   deleteLetter: (state: MailboxInitialState, action: Action) => {
     if (action.payload.sectionType === MailboxSections.incoming) {
-      state.incoming = state.incoming.letters.filter(
+      state.incoming.letters = state.incoming.letters.filter(
         (letter: Letter) => letter.id !== action.payload.id
       );
     }
     if (action.payload.sectionType === MailboxSections.sent) {
-      state.sent = state.sent.letters.filter(
+      state.sent.letters = state.sent.letters.filter(
         (letter: Letter) => letter.id !== action.payload.id
       );
     }
     if (action.payload.sectionType === MailboxSections.drafts) {
-      state.drafts = state.drafts.letters.filter(
+      state.drafts.letters = state.drafts.letters.filter(
         (letter: Letter) => letter.id !== action.payload.id
       );
     }
     if (action.payload.sectionType === MailboxSections.deleted) {
-      state.deleted = state.deleted.letters.filter(
+      state.deleted.letters = state.deleted.letters.filter(
         (letter: Letter) => letter.id !== action.payload.id
       );
     }
     if (action.payload.sectionType === MailboxSections.spam) {
-      state.spam = state.spam.letters.filter(
+      state.spam.letters = state.spam.letters.filter(
         (letter: Letter) => letter.id !== action.payload.id
       );
     }
-    // if (action.payload.sectionType === MailboxSections.custom) {
-    //   state.customSections = state.customSections.map((sec: MailboxSection) => {
-    //     if (sec.id === action.payload.id)
-    //   })
-      
-    //   .letters.filter(
-    //     (letter: Letter) => letter.id !== action.payload.id
-    //   );
-    // }
+    if (action.payload.sectionType === MailboxSections.custom) {
+      state.customSections = state.customSections.map((sec: MailboxSection) => {
+        if (sec.id === action.payload.section.id) {
+          sec.letters = sec.letters.filter(
+            (letter: Letter) => letter.id !== action.payload.id
+          );
+        }
+        return sec;
+      });
+    }
   },
   moveLetter: (state: MailboxInitialState, action: Action) => {
     const from = action.payload.from.sectionType as keyof typeof state;

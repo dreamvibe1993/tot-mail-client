@@ -27,8 +27,10 @@ export const MailBox: React.FC<MailBoxProps> = ({ sectionType }) => {
 
   React.useEffect(() => {
     if (sectionType === MailboxSections.custom) {
-      if (!params.customSectionId) return console.error('No custom section id in mailbox!');
-      if (!customSections.length) return console.error('No custom sections in mailbox!');
+      if (!params.customSectionId)
+        return console.error("No custom section id in mailbox!");
+      if (!customSections.length)
+        return console.error("No custom sections in mailbox!");
       const section = customSections.find(
         (section: MailboxSection) => section.id === params.customSectionId
       );
@@ -38,14 +40,24 @@ export const MailBox: React.FC<MailBoxProps> = ({ sectionType }) => {
       setMail(mailboxSections[sectionType].letters);
       setSection(mailboxSections[sectionType]);
     }
-  }, [deleted, drafts, incoming, sent, spam, sectionType, params.customSectionId]);
+  }, [
+    deleted,
+    drafts,
+    incoming,
+    sent,
+    spam,
+    sectionType,
+    params.customSectionId,
+    customSections
+  ]);
 
   if (!mail.length) return <span>No mail yet!</span>;
+  if (!section) return <span>This section does not exist!</span>;
 
   return (
     <MailBoxContainer>
       <TopBar>
-        <MailboxName>{section && section.name.toUpperCase()}</MailboxName>
+        <MailboxName>{section.name.toUpperCase()}</MailboxName>
         <Controls>
           <ServiceButton>
             <BsReplyFill />
@@ -56,7 +68,12 @@ export const MailBox: React.FC<MailBoxProps> = ({ sectionType }) => {
         </Controls>
       </TopBar>
       {mail.map((letter: Letter) => (
-        <LetterTab letter={letter} sectionType={sectionType} key={letter.id} />
+        <LetterTab
+          letter={letter}
+          sectionType={sectionType}
+          section={section}
+          key={letter.id}
+        />
       ))}
     </MailBoxContainer>
   );

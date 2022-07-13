@@ -20,6 +20,7 @@
   "rules": {
     "no-unused-vars": "warn",
     "react-hooks/exhaustive-deps": "warn",
-    "react/prop-types": 0
+    "react/prop-types": 0,
+    "@typescript-eslint/no-loss-of-precision": 0
   }
 }
