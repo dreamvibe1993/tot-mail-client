@@ -11,9 +11,13 @@ export const OptionsDropdown: React.FC<OptionsDropdownProps> = ({
   options = [],
 }) => {
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
+  const [x, setX] = React.useState<number>(0);
+  const [y, setY] = React.useState<number>(0);
   const thisElementId = React.useRef(
     `options-dropdown-id_${new Date().getTime()}`
   );
+
+  const childrenRef = React.useRef<HTMLDivElement>(null);
 
   const closeDropdown = React.useCallback(
     (e: MouseEvent) => {
@@ -26,6 +30,14 @@ export const OptionsDropdown: React.FC<OptionsDropdownProps> = ({
   );
 
   React.useEffect(() => {
+    const { current: childrenWrapper } = childrenRef;
+    if (!childrenWrapper) return;
+    const clientRect = childrenWrapper.getBoundingClientRect();
+    setX(clientRect.x + clientRect.width);
+    setY(clientRect.y + clientRect.height);
+  }, []);
+
+  React.useEffect(() => {
     window.addEventListener("click", closeDropdown);
     return () => {
       window.removeEventListener("click", closeDropdown);
@@ -34,9 +46,11 @@ export const OptionsDropdown: React.FC<OptionsDropdownProps> = ({
 
   return (
     <DropdownWrapper onClick={() => setIsOpen(true)} id={thisElementId.current}>
-      <div style={{ pointerEvents: "none" }}>{children}</div>
+      <div style={{ pointerEvents: "none" }} ref={childrenRef}>
+        {children}
+      </div>
       {isOpen && (
-        <Dropdown>
+        <Dropdown x={x} y={y}>
           {options.map((o, i) => (
             <div key={o.name + i} onClick={() => o.handler()}>
               {o.name}
@@ -48,15 +62,22 @@ export const OptionsDropdown: React.FC<OptionsDropdownProps> = ({
   );
 };
 
-const Dropdown = styled.div`
-  position: absolute;
+interface DropdownProps {
+  x: number;
+  y: number;
+}
+
+const Dropdown = styled.div<DropdownProps>`
+  position: fixed;
   z-index: 10;
-  top: 100%;
+  top: 0;
+  left: 0;
   display: flex;
   flex-direction: column;
   background-color: white;
-  border: 1px solid gray;
-  box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.2);
+  transform: ${(p) => `translate(${p.x}px, ${p.y}px)`};
   & > * {
     padding: 0.5rem;
     cursor: pointer;

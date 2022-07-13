@@ -52,6 +52,7 @@ export const MailBox: React.FC<MailBoxProps> = ({ sectionType }) => {
   ]);
 
   if (!mail.length) return <span>No mail yet!</span>;
+  
   if (!section) return <span>This section does not exist!</span>;
 
   return (
@@ -79,7 +80,11 @@ export const MailBox: React.FC<MailBoxProps> = ({ sectionType }) => {
   );
 };
 
-const MailboxName = styled.h2``;
+const MailboxName = styled.h2`
+    padding: 0;
+    margin: 0;
+
+`;
 
 const Controls = styled.div`
   display: flex;
@@ -98,12 +103,12 @@ const Controls = styled.div`
 const TopBar = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: flex-start;
 `;
 
 const MailBoxContainer = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 2rem;
   & > * {
     &:not(:last-child) {
       margin-bottom: 2rem;

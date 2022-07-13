@@ -13,64 +13,13 @@ import { CursorWrap } from "../UI/Wraps/CursorWrap";
 import { OptionsDropdown } from "../UI/Dropdowns/OptionsDropdown";
 import { MenuTab } from "../UI/Tabs/MenuTab";
 import { CustomSectionMenuTab } from "../UI/Tabs/CustomSectionMenuTab/CustomSectionMenuTab";
+import { DrawerMenu } from "../DrawerMenu/DrawerMenu";
 
 export const MailClient: React.FC = () => {
-  const { url } = useRouteMatch();
-  const mailboxSections = useAppSelector((state) => state.mailbox);
-  const dispatch = useAppDispatch();
-
-  const [newSectionName, setNewSectionName] = React.useState<string>("");
-
-  const [isSectionNameInputOpen, setSectionNameInputOpen] =
-    React.useState<boolean>(false);
-
-  function openSectionNameInput(): void {
-    setSectionNameInputOpen(true);
-  }
-
-  function addNewSection(): void {
-    const { customSections } = mailboxSections;
-    const nonUniqueSection = customSections.find(
-      (section: MailboxSection) => section.name === newSectionName
-    );
-    if (nonUniqueSection) {
-      return console.error(`Section called ${newSectionName} already exists!`);
-    }
-    if (!newSectionName) return console.error(`No empty section name allowed!`);
-    dispatch(mailboxActions.addSection({ name: newSectionName }));
-    setNewSectionName("");
-    setSectionNameInputOpen(false);
-  }
-
   return (
     <MailClientContainer>
       <Drawer>
-        {Object.values(mailboxSections).map(
-          (section: MailboxSection) =>
-            !Array.isArray(section) && (
-              <Link key={section.id} to={`${url}/${section.slug}`}>
-                <MenuTab>{section.name}</MenuTab>
-              </Link>
-            )
-        )}
-        <hr />
-        <ServiceButton onClick={openSectionNameInput}>+ создать</ServiceButton>
-        {isSectionNameInputOpen && (
-          <SectionNameInputContainer>
-            <ServiceInput
-              type="text"
-              placeholder="Type new section name"
-              value={newSectionName}
-              onChange={(e) => setNewSectionName(e.target.value)}
-            />
-            <ServiceButton onClick={addNewSection}>
-              <BsCheck2 />
-            </ServiceButton>
-          </SectionNameInputContainer>
-        )}
-        {mailboxSections.customSections.map((section: MailboxSection) => (
-          <CustomSectionMenuTab key={section.id} section={section} />
-        ))}
+        <DrawerMenu />
       </Drawer>
       <Client>
         <MailClientRoutes />
@@ -78,20 +27,6 @@ export const MailClient: React.FC = () => {
     </MailClientContainer>
   );
 };
-
-const SectionNameInputContainer = styled.div`
-  display: flex;
-  width: 100%;
-  justify-content: stretch;
-  overflow: hidden;
-  button {
-    width: 30%;
-  }
-  input {
-    width: 70%;
-    margin-right: 1rem;
-  }
-`;
 
 const Client = styled.div`
   grid-area: scrn;

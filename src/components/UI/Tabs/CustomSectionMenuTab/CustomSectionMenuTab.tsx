@@ -70,7 +70,7 @@ export const CustomSectionMenuTab: React.FC<CustomSecMenuTabProps> = ({
     <CustomTab id={thisElementId.current}>
       {isTabRenaming ? (
         <TabNameInputs>
-          <ServiceInput
+          <SpecialInput
             id={thisElementId.current}
             type="text"
             placeholder="Type new section name"
@@ -81,7 +81,7 @@ export const CustomSectionMenuTab: React.FC<CustomSecMenuTabProps> = ({
             id={thisElementId.current}
             onClick={() => renameTab(section.id)}
           >
-            <div style={{ pointerEvents: "none" }}>
+            <div style={{ pointerEvents: "none", display: "flex", alignItems: "center" }}>
               <BsCheck2 />
             </div>
           </ServiceButton>
@@ -106,6 +106,18 @@ export const CustomSectionMenuTab: React.FC<CustomSecMenuTabProps> = ({
     </CustomTab>
   );
 };
+
+const SpecialInput = styled.input`
+  width: 70%;
+  margin-right: .5rem;
+  padding: 0;
+  border: none;
+  font-size: 1.6rem;
+  outline: none;
+  &::placeholder {
+    font-size: 1rem;
+  }
+`
 
 const TabNameInputs = styled.div`
   display: flex;
