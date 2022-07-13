@@ -76,7 +76,7 @@ export const sectionActions = {
               return section.name.includes(sectionName);
             })
             .map((section: MailboxSection) => {
-              const digit = section.name.match(digitRegex);
+              const digit = section.name.match(digitSpaceRegex);
               if (digit) return Number(digit[0]);
               return 0;
             })
