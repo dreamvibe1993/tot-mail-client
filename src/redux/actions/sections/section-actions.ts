@@ -19,7 +19,8 @@ const digitSpaceRegex = /\s\d+$/gm;
 const digitRegex = /\d+$/gm;
 
 const addDigitToName: AddDigitAction = (name) => {
-  const digitWithSpaceInName: RegExpMatchArray | null = name.match(digitSpaceRegex);
+  const digitWithSpaceInName: RegExpMatchArray | null =
+    name.match(digitSpaceRegex);
   if (digitWithSpaceInName) {
     const nameWithoutDigit = name.replace(digitSpaceRegex, "");
     return nameWithoutDigit + " " + (Number(digitWithSpaceInName[0]) + 1);
@@ -57,50 +58,43 @@ export const sectionActions = {
     const customSections = state.customSections;
 
     state.customSections = customSections.reduce(
-      (acc: Array<MailboxSection>, currentSection: MailboxSection) => {
-        if (currentSection.id === action.payload.id) {
-          for (let i = 0; i < 2; i++) {
-            acc.push(currentSection);
-
-            let copiedSection = setSectionData(
-              addDigitToName(currentSection.name)
-            );
-
-            const sameSections = state.customSections.filter(
-              (section: MailboxSection) => {
-                const copiedSectionName = copiedSection.name.replace(
-                  digitSpaceRegex,
-                  ""
-                );
-                return section.name.includes(copiedSectionName);
-              }
-            );
-
-            if (sameSections.length) {
-              const onlyDigits = sameSections
-                .map((section: MailboxSection) => {
-                  const digit = section.name.match(digitRegex);
-                  if (digit) return Number(digit[0]);
-                  return 0;
-                })
-                .filter(Boolean)
-                .sort((a: number, b: number) => a - b);
-              const newName = addDigitToName(
-                copiedSection.name.replace(digitRegex, "") +
-                  (onlyDigits.reverse()[0] || "0")
-              );
-              copiedSection = setSectionData(newName);
-            }
-
-            currentSection = {
-              ...copiedSection,
-              letters: currentSection.letters,
-            };
-          }
+      (acc: Array<MailboxSection>, section: MailboxSection) => {
+        if (section.id !== action.payload.id) {
+          acc.push(section);
           return acc;
         }
-        
-        acc.push(currentSection);
+        for (let i = 0; i < 2; i++) {
+          acc.push(section);
+
+          const nameWithoutDigit = section.name.replace(digitSpaceRegex, "");
+
+          let sectionCopy = setSectionData(addDigitToName(section.name)); //name + 1
+
+          const sameSectionsDigits = state.customSections
+            .filter((section: MailboxSection) => {
+              const sectionName = sectionCopy.name.replace(digitSpaceRegex, "");
+              return section.name.includes(sectionName);
+            })
+            .map((section: MailboxSection) => {
+              const digit = section.name.match(digitRegex);
+              if (digit) return Number(digit[0]);
+              return 0;
+            })
+            .sort((a: number, b: number) => a - b);
+
+          if (sameSectionsDigits.length) {
+            const greatestNumber = sameSectionsDigits.reverse()[0];
+            const newName = addDigitToName(
+              nameWithoutDigit + " " + greatestNumber
+            );
+            sectionCopy = setSectionData(newName);
+          }
+
+          section = {
+            ...sectionCopy,
+            letters: section.letters,
+          };
+        }
         return acc;
       },
       []
