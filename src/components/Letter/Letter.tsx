@@ -44,6 +44,9 @@ export const Letter: React.FC<LetterProps> = ({ mailbox }) => {
     if (mailbox === MailboxSections.spam) {
       letter = findLetter(spam.letters);
     }
+    // if (mailbox === MailboxSections.custom) {
+    //   letter = findLetter(customSections.find())
+    // }
     if (letter) setLetter(letter);
   }, [
     deleted.letters,

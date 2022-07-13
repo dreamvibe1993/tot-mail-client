@@ -68,7 +68,7 @@ export const sectionActions = {
 
           const nameWithoutDigit = section.name.replace(digitSpaceRegex, "");
 
-          let sectionCopy = setSectionData(addDigitToName(section.name)); //name + 1
+          let sectionCopy = setSectionData(addDigitToName(section.name));
 
           const sameSectionsDigits = state.customSections
             .filter((section: MailboxSection) => {

@@ -23,6 +23,9 @@ export const MailClientRoutes = () => {
       <Route path={`${path}/spam`} exact={true}>
         <MailBox type={MailboxSections.spam} />
       </Route>
+      <Route path={`${path}/:customSectionId`} exact={true}>
+        <MailBox type={MailboxSections.custom} />
+      </Route>
       <Route path={`${path}/incoming/:id`} exact={true}>
         <Letter mailbox={MailboxSections.incoming} />
       </Route>
@@ -37,6 +40,9 @@ export const MailClientRoutes = () => {
       </Route>
       <Route path={`${path}/spam/:id`} exact={true}>
         <Letter mailbox={MailboxSections.incoming} />
+      </Route>
+      <Route path={`${path}/:customSectionId/:id`} exact={true}>
+        <Letter mailbox={MailboxSections.custom} />
       </Route>
     </Switch>
   );

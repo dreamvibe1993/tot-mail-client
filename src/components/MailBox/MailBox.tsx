@@ -8,17 +8,28 @@ import { ServiceButton } from "../UI/Buttons/ServiceButton/ServiceButton";
 
 import { BsReplyFill, BsThreeDotsVertical } from "react-icons/bs";
 import { MailboxSections } from "../../models/types/enums/mailboxes";
+import { useParams } from "react-router-dom";
 
 interface MailBoxProps {
   type: MailboxSections;
 }
 
 export const MailBox: React.FC<MailBoxProps> = ({ type }) => {
-  const { incoming, sent, deleted, drafts, spam } = useAppSelector(
-    (state) => state.mailbox
-  );
+  const { incoming, sent, deleted, drafts, spam, customSections } =
+    useAppSelector((state) => state.mailbox);
+  const params: { customSectionId: string } = useParams();
 
   const [mail, setMail] = React.useState<Array<Letter>>([]);
+
+  React.useEffect(() => {
+    if (!params.customSectionId) return;
+    if (type === MailboxSections.custom)
+      setMail(
+        customSections.find(
+          (section: MailboxSection) => section.id === params.customSectionId
+        )
+      );
+  }, []);
 
   React.useEffect(() => {
     if (type === MailboxSections.incoming) setMail(incoming.letters);
