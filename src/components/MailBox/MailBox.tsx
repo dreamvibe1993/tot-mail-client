@@ -11,39 +11,41 @@ import { MailboxSections } from "../../models/types/enums/mailboxes";
 import { useParams } from "react-router-dom";
 
 interface MailBoxProps {
-  type: MailboxSections;
+  sectionType: MailboxSections;
 }
 
-export const MailBox: React.FC<MailBoxProps> = ({ type }) => {
+export const MailBox: React.FC<MailBoxProps> = ({ sectionType }) => {
   const { incoming, sent, deleted, drafts, spam, customSections } =
     useAppSelector((state) => state.mailbox);
+  const mailboxSections = useAppSelector((state) => state.mailbox);
   const params: { customSectionId: string } = useParams();
 
   const [mail, setMail] = React.useState<Array<Letter>>([]);
+  const [section, setSection] = React.useState<MailboxSection | null>();
+
+  React.useEffect(() => {}, [sectionType]);
 
   React.useEffect(() => {
-    if (!params.customSectionId) return;
-    if (type === MailboxSections.custom)
-      setMail(
-        customSections.find(
-          (section: MailboxSection) => section.id === params.customSectionId
-        )
+    if (sectionType === MailboxSections.custom) {
+      if (!params.customSectionId) return console.error('No custom section id in mailbox!');
+      if (!customSections.length) return console.error('No custom sections in mailbox!');
+      const section = customSections.find(
+        (section: MailboxSection) => section.id === params.customSectionId
       );
-  }, []);
-
-  React.useEffect(() => {
-    if (type === MailboxSections.incoming) setMail(incoming.letters);
-    if (type === MailboxSections.sent) setMail(sent.letters);
-    if (type === MailboxSections.deleted) setMail(deleted.letters);
-    if (type === MailboxSections.drafts) setMail(drafts.letters);
-    if (type === MailboxSections.spam) setMail(spam.letters);
-  }, [deleted, drafts, incoming, sent, spam, type]);
+      setMail(section.letters);
+      setSection(section);
+    } else {
+      setMail(mailboxSections[sectionType].letters);
+      setSection(mailboxSections[sectionType]);
+    }
+  }, [deleted, drafts, incoming, sent, spam, sectionType, params.customSectionId]);
 
   if (!mail.length) return <span>No mail yet!</span>;
 
   return (
     <MailBoxContainer>
       <TopBar>
+        <MailboxName>{section && section.name.toUpperCase()}</MailboxName>
         <Controls>
           <ServiceButton>
             <BsReplyFill />
@@ -54,11 +56,13 @@ export const MailBox: React.FC<MailBoxProps> = ({ type }) => {
         </Controls>
       </TopBar>
       {mail.map((letter: Letter) => (
-        <LetterTab letter={letter} mailbox={type} key={letter.id} />
+        <LetterTab letter={letter} sectionType={sectionType} key={letter.id} />
       ))}
     </MailBoxContainer>
   );
 };
+
+const MailboxName = styled.h2``;
 
 const Controls = styled.div`
   display: flex;

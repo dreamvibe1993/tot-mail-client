@@ -9,40 +9,41 @@ export const MailClientRoutes = () => {
   return (
     <Switch>
       <Route path={`${path}/incoming`} exact={true}>
-        <MailBox type={MailboxSections.incoming} />
+        <MailBox sectionType={MailboxSections.incoming} />
       </Route>
       <Route path={`${path}/sent`} exact={true}>
-        <MailBox type={MailboxSections.sent} />
+        <MailBox sectionType={MailboxSections.sent} />
       </Route>
       <Route path={`${path}/deleted`} exact={true}>
-        <MailBox type={MailboxSections.deleted} />
+        <MailBox sectionType={MailboxSections.deleted} />
       </Route>
       <Route path={`${path}/drafts`} exact={true}>
-        <MailBox type={MailboxSections.drafts} />
+        <MailBox sectionType={MailboxSections.drafts} />
       </Route>
       <Route path={`${path}/spam`} exact={true}>
-        <MailBox type={MailboxSections.spam} />
+        <MailBox sectionType={MailboxSections.spam} />
       </Route>
       <Route path={`${path}/:customSectionId`} exact={true}>
-        <MailBox type={MailboxSections.custom} />
+        <MailBox sectionType={MailboxSections.custom} />
       </Route>
+
       <Route path={`${path}/incoming/:id`} exact={true}>
-        <Letter mailbox={MailboxSections.incoming} />
+        <Letter sectionType={MailboxSections.incoming} />
       </Route>
       <Route path={`${path}/sent/:id`} exact={true}>
-        <Letter mailbox={MailboxSections.incoming} />
+        <Letter sectionType={MailboxSections.sent} />
       </Route>
       <Route path={`${path}/deleted/:id`} exact={true}>
-        <Letter mailbox={MailboxSections.incoming} />
+        <Letter sectionType={MailboxSections.deleted} />
       </Route>
       <Route path={`${path}/drafts/:id`} exact={true}>
-        <Letter mailbox={MailboxSections.incoming} />
+        <Letter sectionType={MailboxSections.drafts} />
       </Route>
       <Route path={`${path}/spam/:id`} exact={true}>
-        <Letter mailbox={MailboxSections.incoming} />
+        <Letter sectionType={MailboxSections.spam} />
       </Route>
       <Route path={`${path}/:customSectionId/:id`} exact={true}>
-        <Letter mailbox={MailboxSections.custom} />
+        <Letter sectionType={MailboxSections.custom} />
       </Route>
     </Switch>
   );

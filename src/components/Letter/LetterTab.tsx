@@ -10,15 +10,15 @@ import { CursorWrap } from "../UI/Wraps/CursorWrap";
 
 interface LetterTabProps {
   letter: Letter;
-  mailbox: MailboxSections;
+  sectionType: MailboxSections;
 }
 
-export const LetterTab: React.FC<LetterTabProps> = ({ letter, mailbox }) => {
+export const LetterTab: React.FC<LetterTabProps> = ({ letter, sectionType }) => {
   const dispatch = useAppDispatch();
   const { url } = useRouteMatch();
 
   function deleteLetter(): void {
-    dispatch(mailboxActions.deleteLetter({ id: letter.id, mailbox }));
+    dispatch(mailboxActions.deleteLetter({ id: letter.id, sectionType }));
   }
 
   if (!letter) return null;

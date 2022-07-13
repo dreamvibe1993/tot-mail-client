@@ -1,0 +1,15 @@
+{
+  "id": "letter-11",
+  "sender": {
+    "name": "Plain Doe",
+    "email": "Plain@doe.ua"
+  },
+  "recipient": {
+    "name": "Daria Doe",
+    "email": "Daria@doe.uk"
+  },
+  "sentAt": "2022-07-12T08:19:34.336Z",
+  "receivedAt": "2022-07-12T08:19:34.336Z",
+  "topic": "Yellow submarine",
+  "message": "# Hey Douche! \nEiusmod eu nisi ullamco quis do. Consectetur laborum consectetur culpa ullamco enim cupidatat amet. \nUllamco veniam ad consequat aliquip occaecat esse ut quis enim nostrud et ex sint elit."
+}

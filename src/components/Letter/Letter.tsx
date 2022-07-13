@@ -4,19 +4,22 @@ import ReactMarkdown from "react-markdown";
 
 import { ServiceButton } from "../UI/Buttons/ServiceButton/ServiceButton";
 import { BsReplyFill, BsThreeDotsVertical } from "react-icons/bs";
-import { useAppSelector } from "../../redux/hooks/hooks";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks/hooks";
 import { useParams } from "react-router";
 import { MailboxSections } from "../../models/types/enums/mailboxes";
+import { mailboxActions } from "../../redux/reducers/mailbox/mailboxSlice";
 
 interface LetterProps {
-  mailbox: MailboxSections;
+  sectionType: MailboxSections;
 }
 
-export const Letter: React.FC<LetterProps> = ({ mailbox }) => {
+export const Letter: React.FC<LetterProps> = ({ sectionType }) => {
   const { incoming, sent, drafts, deleted, spam, customSections } =
     useAppSelector((state) => state.mailbox);
+  const mailboxSections = useAppSelector((state) => state.mailbox);
   const sections = useAppSelector((state) => state.mailbox);
-  const params: { id: string } = useParams();
+  const dispatch = useAppDispatch();
+  const params: { id: string; customSectionId: string } = useParams();
   const [letter, setLetter] = React.useState<Letter | undefined>();
 
   const findLetter = React.useCallback(
@@ -29,24 +32,32 @@ export const Letter: React.FC<LetterProps> = ({ mailbox }) => {
   React.useEffect(() => {
     if (!params.id) return;
     let letter;
-    if (mailbox === MailboxSections.incoming) {
+    if (sectionType === MailboxSections.incoming) {
       letter = findLetter(incoming.letters);
     }
-    if (mailbox === MailboxSections.sent) {
+    if (sectionType === MailboxSections.sent) {
       letter = findLetter(sent.letters);
     }
-    if (mailbox === MailboxSections.drafts) {
+    if (sectionType === MailboxSections.drafts) {
       letter = findLetter(drafts.letters);
     }
-    if (mailbox === MailboxSections.deleted) {
+    if (sectionType === MailboxSections.deleted) {
       letter = findLetter(deleted.letters);
     }
-    if (mailbox === MailboxSections.spam) {
+    if (sectionType === MailboxSections.spam) {
       letter = findLetter(spam.letters);
     }
-    // if (mailbox === MailboxSections.custom) {
-    //   letter = findLetter(customSections.find())
-    // }
+    if (sectionType === MailboxSections.custom) {
+      letter = findLetter(
+        (() => {
+          const section = customSections.find(
+            (section: MailboxSection) => section.id === params.customSectionId
+          );
+          if (section) return section.letters;
+          else return [];
+        })()
+      );
+    }
     if (letter) setLetter(letter);
   }, [
     deleted.letters,
@@ -55,12 +66,25 @@ export const Letter: React.FC<LetterProps> = ({ mailbox }) => {
     sent.letters,
     spam.letters,
     params.id,
-    mailbox,
+    sectionType,
     findLetter,
   ]);
 
   function moveLetter(e: ChangeEvent<HTMLSelectElement>) {
-    console.log(e.target.value);
+    const sectionId = e.target.value;
+    let sectionFrom = mailboxSections[sectionType];
+    if (sectionType === MailboxSections.custom) {
+      sectionFrom = mailboxSections[sectionType].find(
+        (section: MailboxSection) => section.id === params.customSectionId
+      );
+    }
+    dispatch(
+      mailboxActions.moveLetter({
+        from: { sectionType, section: sectionFrom },
+        letter,
+        to: { sectionId },
+      })
+    );
   }
 
   if (!letter) return <span>Loading...</span>;
@@ -79,9 +103,9 @@ export const Letter: React.FC<LetterProps> = ({ mailbox }) => {
           <Select name="select" onChange={moveLetter}>
             <option>Переместить вo...</option>
             {Object.values(sections).map(
-              (sec: MailboxSection) =>
+              (sec: MailboxSection, i) =>
                 !Array.isArray(sec) && (
-                  <option key={sec.id} value={sec.id}>
+                  <option key={sec.id} value={Object.keys(sections)[i]}>
                     {sec.name}
                   </option>
                 )

@@ -1,0 +1,15 @@
+{
+  "id": "letter-12",
+  "sender": {
+    "name": "Foo Doe",
+    "email": "foo@doe.ua"
+  },
+  "recipient": {
+    "name": "Bax Doe",
+    "email": "Bax@doe.uk"
+  },
+  "sentAt": "2022-07-12T08:19:34.336Z",
+  "receivedAt": "2022-07-12T08:19:34.336Z",
+  "topic": "Happy lol",
+  "message": "# Hey Mike! \nEiusmod eu nisi ullamco quis do. Consectetur laborum consectetur culpa ullamco enim cupidatat amet. \nUllamco veniam ad consequat aliquip occaecat esse ut quis enim nostrud et ex sint elit."
+}

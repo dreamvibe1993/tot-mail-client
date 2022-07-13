@@ -1,0 +1,15 @@
+{
+  "id": "letter-13",
+  "sender": {
+    "name": "Jane Mike",
+    "email": "mane@doe.ua"
+  },
+  "recipient": {
+    "name": "John Cike",
+    "email": "stain@doe.uk"
+  },
+  "sentAt": "2022-07-12T08:19:34.336Z",
+  "receivedAt": "2022-07-12T08:19:34.336Z",
+  "topic": "Wololo birthday",
+  "message": "# Hey John! \nEiusmod eu nisi ullamco quis do. Consectetur laborum consectetur culpa ullamco enim cupidatat amet. \nUllamco veniam ad consequat aliquip occaecat esse ut quis enim nostrud et ex sint elit."
+}

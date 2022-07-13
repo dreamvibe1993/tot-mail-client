@@ -5,5 +5,5 @@ export enum MailboxSections {
   drafts = "drafts",
   deleted = "deleted",
   spam = "spam",
-  custom = "custom"
+  custom = "customSections"
 }

@@ -11,6 +11,10 @@ import "./App.css";
 
 import { MailClient } from "./components/MailClient/MailClient";
 
+/**
+ * TODO: check types 
+ */
+
 function App() {
   const history = useHistory();
 
