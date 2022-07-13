@@ -8,6 +8,11 @@ import { ServiceButton } from "../UI/Buttons/ServiceButton/ServiceButton";
 import { ServiceInput } from "../UI/Inputs/ServiceInput";
 import { mailboxActions } from "../../redux/reducers/mailbox/mailboxSlice";
 import { MailClientRoutes } from "../../configs/routes/mail-client-routes";
+import { BsThreeDotsVertical, BsCheck2 } from "react-icons/bs";
+import { CursorWrap } from "../UI/Wraps/CursorWrap";
+import { OptionsDropdown } from "../UI/Dropdowns/OptionsDropdown";
+import { MenuTab } from "../UI/Tabs/MenuTab";
+import { CustomSectionMenuTab } from "../UI/Tabs/CustomSectionMenuTab/CustomSectionMenuTab";
 
 export const MailClient: React.FC = () => {
   const { url } = useRouteMatch();
@@ -31,7 +36,9 @@ export const MailClient: React.FC = () => {
     if (nonUniqueSection) {
       return console.error(`Section called ${newSectionName} already exists!`);
     }
+    if (!newSectionName) return console.error(`No empty section name allowed!`);
     dispatch(mailboxActions.addSection({ name: newSectionName }));
+    setNewSectionName("");
     setSectionNameInputOpen(false);
   }
 
@@ -42,7 +49,7 @@ export const MailClient: React.FC = () => {
           (section: MailboxSection) =>
             !Array.isArray(section) && (
               <Link key={section.id} to={`${url}/${section.slug}`}>
-                <Tab>{section.name}</Tab>
+                <MenuTab>{section.name}</MenuTab>
               </Link>
             )
         )}
@@ -56,13 +63,13 @@ export const MailClient: React.FC = () => {
               value={newSectionName}
               onChange={(e) => setNewSectionName(e.target.value)}
             />
-            <ServiceButton onClick={addNewSection}>сохранить</ServiceButton>
+            <ServiceButton onClick={addNewSection}>
+              <BsCheck2 />
+            </ServiceButton>
           </SectionNameInputContainer>
         )}
         {mailboxSections.customSections.map((section: MailboxSection) => (
-          <Link key={section.id} to={`${url}/${section.slug}`}>
-            <Tab>{section.name}</Tab>
-          </Link>
+          <CustomSectionMenuTab key={section.id} section={section} />
         ))}
       </Drawer>
       <Client>
@@ -94,13 +101,6 @@ const Client = styled.div`
   display: flex;
   flex-direction: column;
   padding: 2rem;
-`;
-
-const Tab = styled.div`
-  padding: 1rem;
-  border: 1px solid gray;
-  border-radius: 15px 0px 0px 15px;
-  font-size: 1.6rem;
 `;
 
 const MailClientContainer = styled.div`
