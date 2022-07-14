@@ -16,30 +16,30 @@ export const FakeLoader = () => {
   const counter = React.useRef<number>(0);
 
   React.useEffect(() => {
-    // intervalId.current = setInterval(() => {
-    //   ++counter.current;
-    //   if (counter.current % 4 === 0) {
-    //     setText("⏳Loading");
-    //   } else {
-    //     setText((prev) => prev + ".");
-    //   }
-    // }, 400);
-    // timerId1.current = setTimeout(() => {
-    //   setText("You've got ✉️✉️✉️!");
-    //   window.clearInterval(intervalId.current);
-    // }, 5000);
-    // timerId2.current = setTimeout(() => {
-    //   setText("Redirecting...📩");
-    // }, 6000);
-    // timerId3.current = setTimeout(() => {
-    //   history.push("/mailbox/incoming");
-    // }, 7000);
-    // return () => {
-    //   window.clearInterval(intervalId.current);
-    //   window.clearTimeout(timerId1.current);
-    //   window.clearTimeout(timerId2.current);
-    //   window.clearTimeout(timerId3.current);
-    // };
+    intervalId.current = setInterval(() => {
+      ++counter.current;
+      if (counter.current % 4 === 0) {
+        setText("⏳Loading");
+      } else {
+        setText((prev) => prev + ".");
+      }
+    }, 400);
+    timerId1.current = setTimeout(() => {
+      setText("You've got ✉️✉️✉️!");
+      window.clearInterval(intervalId.current);
+    }, 5000);
+    timerId2.current = setTimeout(() => {
+      setText("Redirecting...📩");
+    }, 6000);
+    timerId3.current = setTimeout(() => {
+      history.push("/mailbox/incoming");
+    }, 7000);
+    return () => {
+      window.clearInterval(intervalId.current);
+      window.clearTimeout(timerId1.current);
+      window.clearTimeout(timerId2.current);
+      window.clearTimeout(timerId3.current);
+    };
   }, []);
 
   return (
