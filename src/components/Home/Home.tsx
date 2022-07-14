@@ -30,10 +30,13 @@ export const Home = () => {
         </ul>
       </Block>
       <Block>
-        <Heading>Репозиторий проекта: </Heading>
+        <Heading>Линки: </Heading>
         <ul>
           <li>
-            <a href="https://github.com/dreamvibe1993/tot-mail-client">Github</a>
+            <a href="https://github.com/dreamvibe1993/tot-mail-client">Репозиторий</a>
+          </li>
+          <li>
+            <a href="https://dreamvibe1993.github.io/tot-mail-client/">Деплой</a>
           </li>
         </ul>
       </Block>

@@ -109,6 +109,7 @@ export const MailboxSection: React.FC<MailboxSectionProps> = ({
   };
 
   const sortLettersByDate = () => {
+    uncheckAll()
     setMail((letters) =>
       JSON.parse(JSON.stringify(letters)).sort((a: Letter, b: Letter) => {
         return (
@@ -119,6 +120,7 @@ export const MailboxSection: React.FC<MailboxSectionProps> = ({
   };
 
   const sortLettersByStatus = () => {
+    uncheckAll()
     setMail((letters) =>
       JSON.parse(JSON.stringify(letters)).sort((a: Letter, b: Letter) => {
         if (a.status.seen) return 1;

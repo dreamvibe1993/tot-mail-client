@@ -1,6 +1,7 @@
 import React from "react";
 import {
   BrowserRouter,
+  HashRouter,
   Link,
   Route,
   Switch,
@@ -10,20 +11,19 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import "./App.css";
+import { NotFoundPage } from "./components/404/404";
 import { Home } from "./components/Home/Home";
 
 import { MailClient } from "./components/MailClient/MailClient";
 
 /**
  * TODO:
- * 404
  */
 
 function App() {
-  const history = useHistory();
 
   return (
-    <BrowserRouter>
+    <HashRouter >
       <ToastContainer autoClose={2500} closeOnClick />
       <div className="App">
         <Switch>
@@ -34,11 +34,11 @@ function App() {
             <MailClient />
           </Route>
           <Route>
-            <h1>404!</h1>
+            <NotFoundPage />
           </Route>
         </Switch>
       </div>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 

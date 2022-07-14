@@ -1,7 +1,8 @@
 {
   "name": "mail-client",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
+  "homepage": "https://dreamvibe1993.github.io/tot-mail-client",
   "dependencies": {
     "@reduxjs/toolkit": "^1.8.3",
     "@testing-library/jest-dom": "^5.16.4",
@@ -15,6 +16,7 @@
     "@types/uuid": "^8.3.4",
     "cyrillic-to-translit-js": "^3.2.1",
     "formik": "^2.2.9",
+    "gh-pages": "^4.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.4.0",
@@ -30,6 +32,8 @@
     "yup": "^0.32.11"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

@@ -117,7 +117,7 @@ const Drawer = styled.div<DrawerProps>`
     top: 5.5rem;
     left: 0;
     background-color: white;
-    height: 100%;
+    height: ${window.innerHeight - 55}px;
     width: 75%;
     padding: 1rem;
     transition: transform 0.5s ease;

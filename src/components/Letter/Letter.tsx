@@ -10,6 +10,7 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks/hooks";
 import { MailboxSections } from "../../models/types/enums/mailbox-sections";
 import { mailboxActions } from "../../redux/reducers/mailbox/mailboxSlice";
 import { CursorWrap } from "../UI/Wraps/CursorWrap";
+import { useGoBack } from "../../lib/hooks/useGoBack";
 
 interface LetterProps {
   sectionType: MailboxSections;
@@ -22,7 +23,7 @@ export const Letter: React.FC<LetterProps> = ({ sectionType }) => {
   const sections = useAppSelector((state) => state.mailbox);
   const dispatch = useAppDispatch();
   const params: { id: string; customSectionId: string } = useParams();
-  const history = useHistory();
+  const closeLetter = useGoBack();
 
   const [letter, setLetter] = React.useState<Letter | undefined>();
 
@@ -104,12 +105,6 @@ export const Letter: React.FC<LetterProps> = ({ sectionType }) => {
     );
   }
 
-  const closeLetter = () => {
-    const slugs = history.location.pathname.split("/");
-    const oneSlugBack = slugs.slice(0, slugs.length - 1);
-    const url = oneSlugBack.join("/");
-    history.push(url);
-  };
 
   if (!letter) return <span>Loading...</span>;
 
@@ -166,7 +161,7 @@ const LetterWindowContainer = styled.div`
   overflow-y: auto;
   flex: 1;
   @media (max-width: 425px) {
-    padding: .5rem;
+    padding: 0.5rem;
   }
 `;
 
