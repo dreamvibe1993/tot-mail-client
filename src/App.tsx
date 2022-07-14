@@ -13,7 +13,7 @@ import { MailClient } from "./components/MailClient/MailClient";
 
 /**
  * TODO: 
- * выбрать все
+ * уведомления
  * сортировка
  * ограничение по наименованию в кастом табах
  * прочитанные и нет

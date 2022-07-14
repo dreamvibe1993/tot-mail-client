@@ -98,6 +98,14 @@ export const MailboxSection: React.FC<MailboxSectionProps> = ({
     });
   };
 
+  const checkAll = () => {
+    setCheckedLetters(mail);
+  };
+
+  const uncheckAll = () => {
+    setCheckedLetters([]);
+  };
+
   const handlers = {
     delete: {
       name:
@@ -155,6 +163,17 @@ export const MailboxSection: React.FC<MailboxSectionProps> = ({
       <TopBar>
         <MailboxName>{section && section.name.toUpperCase()}</MailboxName>
         <Controls>
+          {!!mail.length && (
+            <ServiceButton
+              onClick={
+                checkedLetters.length === mail.length ? uncheckAll : checkAll
+              }
+            >
+              {checkedLetters.length === mail.length
+                ? "Uncheck all"
+                : "Check all"}
+            </ServiceButton>
+          )}
           <DropdownMenu options={[...returnMenuOptions()]}>
             <ServiceButton>
               <BsThreeDotsVertical />
@@ -189,6 +208,7 @@ export const MailboxSection: React.FC<MailboxSectionProps> = ({
           sectionType={sectionType}
           section={section}
           onCheck={setCheckedLetters}
+          isChecked={checkedLetters.includes(letter)}
           key={letter.id}
         />
       ))}
@@ -223,6 +243,9 @@ const Controls = styled.div`
   svg {
     width: 2rem;
     height: 100%;
+  }
+  button {
+    height: 4rem;
   }
   & > * {
     &:not(:last-child) {

@@ -15,6 +15,7 @@ interface LetterTabProps {
   sectionType: MailboxSections;
   section: MailboxSection;
   onCheck: Dispatch<SetStateAction<Letter[]>>;
+  isChecked: boolean
 }
 
 export const LetterTab: React.FC<LetterTabProps> = ({
@@ -22,11 +23,10 @@ export const LetterTab: React.FC<LetterTabProps> = ({
   sectionType,
   section,
   onCheck = () => {},
+  isChecked = false
 }) => {
   const dispatch = useAppDispatch();
   const { url } = useRouteMatch();
-
-  const [isCheckboxChecked, setCheckboxChecked] = React.useState(false);
 
   function deleteLetter(): void {
     dispatch(
@@ -35,7 +35,6 @@ export const LetterTab: React.FC<LetterTabProps> = ({
   }
 
   function toggleCheckbox(): void {
-    setCheckboxChecked((prev) => !prev);
     onCheck((prev) => {
       if (prev.includes(letter)) {
         return prev.filter(
@@ -58,8 +57,8 @@ export const LetterTab: React.FC<LetterTabProps> = ({
   return (
     <Mail>
       <div>
-        <Checkbox checked={isCheckboxChecked} onClick={toggleCheckbox}>
-          {isCheckboxChecked && <BsCheck2 />}
+        <Checkbox checked={isChecked} onClick={toggleCheckbox}>
+          {isChecked && <BsCheck2 />}
         </Checkbox>
       </div>
       <VerticalDivider />
