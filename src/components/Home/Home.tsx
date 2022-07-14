@@ -1,6 +1,7 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import styled from "styled-components";
+
+import { Link } from "react-router-dom";
 import { ServiceButton } from "../UI/Buttons/ServiceButton/ServiceButton";
 
 export const Home = () => {
@@ -29,6 +30,14 @@ export const Home = () => {
         </ul>
       </Block>
       <Block>
+        <Heading>Репозиторий проекта: </Heading>
+        <ul>
+          <li>
+            <a href="https://github.com/dreamvibe1993/tot-mail-client">Github</a>
+          </li>
+        </ul>
+      </Block>
+      <Block>
         <Heading>Я: </Heading>
         <ul>
           <li>
@@ -54,6 +63,7 @@ export const Home = () => {
 
 const Heading = styled.h1`
   text-align: center;
+  margin: .5rem 0rem;
 `;
 
 const Block = styled.div`
@@ -70,4 +80,10 @@ const HomeContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  a {
+    text-decoration: underline;
+  }
+  li {
+    font-size: 1.8rem;
+  }
 `;
