@@ -1,7 +1,7 @@
 {
   "id": "letter-3",
   "sender": {
-    "name": "Consectetur culpa",
+    "name": "Семён",
     "email": "keke@doe.ua"
   },
   "recipient": {
@@ -14,5 +14,5 @@
   "sentAt": "2022-07-12T08:19:34.336Z",
   "receivedAt": "2022-07-03T08:19:34.336Z",
   "topic": "Consectetur!",
-  "message": "# Hey John! \nEiusmod eu nisi ullamco quis do. Consectetur laborum consectetur culpa ullamco enim cupidatat amet. \nUllamco veniam ad consequat aliquip occaecat esse ut quis enim nostrud et ex sint elit."
+  "message": "#Агуа-де-Пау\n — стратовулкан, высотой 947 метров. Занимает площадь 150 км². Рядом с вулканом находится кальдера, образовавшаяся 15 000 лет назад, которую заполнило озеро Лагоа-ду-Фогу. Диаметр кальдеры 2,5x3 км. С другой стороны расположена долина шириной 7x4 километра, которая образовалась раньше, в период 30 000-45 000 лет назад. На северном и западном склонах вулкана образовались вулканические купола. Последняя их активность была 5 000 лет назад. Вулкан был активен в эпоху голоцена, характер извержений был плинианского типа"
 }

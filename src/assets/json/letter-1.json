@@ -1,8 +1,8 @@
 {
   "id": "letter-1",
   "sender": {
-    "name": "Jane Doe",
-    "email": "jane@doe.ua"
+    "name": "Георгий Апраксин",
+    "email": "georgy.apraksin@gmail.com"
   },
   "recipient": {
     "name": "John Doe",
@@ -13,6 +13,6 @@
   },
   "sentAt": "2022-07-12T08:19:34.336Z",
   "receivedAt": "2022-07-11T09:19:34.336Z",
-  "topic": "С днем рождения",
-  "message": "# Привет! \nEiusmod eu nisi ullamco quis do. Consectetur laborum consectetur culpa ullamco enim cupidatat amet. \nUllamco veniam ad consequat aliquip occaecat esse ut quis enim nostrud et ex sint elit."
+  "topic": "Приветствие",
+  "message": "# Привет! \n Ты сделал это!\n Ты можешь переместить это письмо в другие ящики или удалить его. Чтобы вернуть все письма назад, просто перезагрузись, потому что всё равно все письма захардкожены, ну или перемести сюда из другого ящика. Удачи!"
 }
