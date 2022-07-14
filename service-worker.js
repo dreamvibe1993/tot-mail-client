@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/tot-mail-client/precache-manifest.f66bfbb155ce0abe9742c53a23337af2.js"
+  "/tot-mail-client/precache-manifest.33ce56462f6e22bf1b4712579b935d23.js"
 );
 
 workbox.clientsClaim();
