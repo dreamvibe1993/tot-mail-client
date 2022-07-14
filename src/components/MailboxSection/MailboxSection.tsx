@@ -219,16 +219,22 @@ export const MailboxSection: React.FC<MailboxSectionProps> = ({
   return (
     <MailBoxContainer>
       <TopBarComponent />
-      {mail.map((letter: Letter) => (
-        <LetterTab
-          letter={letter}
-          sectionType={sectionType}
-          section={section}
-          onCheck={setCheckedLetters}
-          isChecked={checkedLetters.includes(letter)}
-          key={letter.id}
-        />
-      ))}
+      {JSON.parse(JSON.stringify(mail))
+        .sort((a: Letter, b: Letter) => {
+          if (a.status.seen) return 1;
+          if (!a.status.seen) return -1;
+          return 0;
+        })
+        .map((letter: Letter) => (
+          <LetterTab
+            letter={letter}
+            sectionType={sectionType}
+            section={section}
+            onCheck={setCheckedLetters}
+            isChecked={checkedLetters.includes(letter)}
+            key={letter.id}
+          />
+        ))}
     </MailBoxContainer>
   );
 };
