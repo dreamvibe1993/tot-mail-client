@@ -32,7 +32,7 @@ self.__precacheManifest = [
     "url": "/tot-mail-client/static/media/riding-train-0.656685f9.gif"
   },
   {
-    "revision": "5148a1c7be5c448dd9921742df30f3a1",
+    "revision": "c1a426508906ba0c2a6556b220d3680c",
     "url": "/tot-mail-client/index.html"
   }
 ];
