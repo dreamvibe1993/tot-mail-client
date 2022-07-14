@@ -107,6 +107,26 @@ export const MailboxSection: React.FC<MailboxSectionProps> = ({
     });
   };
 
+  const sortLettersByDate = () => {
+    setMail((letters) =>
+      JSON.parse(JSON.stringify(letters)).sort((a: Letter, b: Letter) => {
+        return (
+          new Date(a.receivedAt).getTime() - new Date(b.receivedAt).getTime()
+        );
+      })
+    );
+  };
+
+  const sortLettersByStatus = () => {
+    setMail((letters) =>
+      JSON.parse(JSON.stringify(letters)).sort((a: Letter, b: Letter) => {
+        if (a.status.seen) return 1;
+        if (!a.status.seen) return -1;
+        return 0;
+      })
+    );
+  };
+
   const checkAll = () => {
     setCheckedLetters(mail);
   };
@@ -157,6 +177,7 @@ export const MailboxSection: React.FC<MailboxSectionProps> = ({
         },
       }))
       .filter(Boolean);
+
     if (sectionType === MailboxSections.incoming) {
       return [handlers.delete, handlers.spam, ...customSectionsHandlers];
     }
@@ -191,6 +212,12 @@ export const MailboxSection: React.FC<MailboxSectionProps> = ({
                 : "Check all"}
             </ServiceButton>
           )}
+          <ServiceButton onClick={sortLettersByDate}>
+            Sort by date
+          </ServiceButton>
+          <ServiceButton onClick={sortLettersByStatus}>
+            Sort by status
+          </ServiceButton>
           <DropdownMenu options={[...returnMenuOptions()]}>
             <ServiceButton>
               <BsThreeDotsVertical />
@@ -219,22 +246,16 @@ export const MailboxSection: React.FC<MailboxSectionProps> = ({
   return (
     <MailBoxContainer>
       <TopBarComponent />
-      {JSON.parse(JSON.stringify(mail))
-        .sort((a: Letter, b: Letter) => {
-          if (a.status.seen) return 1;
-          if (!a.status.seen) return -1;
-          return 0;
-        })
-        .map((letter: Letter) => (
-          <LetterTab
-            letter={letter}
-            sectionType={sectionType}
-            section={section}
-            onCheck={setCheckedLetters}
-            isChecked={checkedLetters.includes(letter)}
-            key={letter.id}
-          />
-        ))}
+      {mail.map((letter: Letter) => (
+        <LetterTab
+          letter={letter}
+          sectionType={sectionType}
+          section={section}
+          onCheck={setCheckedLetters}
+          isChecked={checkedLetters.includes(letter)}
+          key={letter.id}
+        />
+      ))}
     </MailBoxContainer>
   );
 };
