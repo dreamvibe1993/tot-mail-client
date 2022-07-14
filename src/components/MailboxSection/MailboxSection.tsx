@@ -109,7 +109,7 @@ export const MailboxSection: React.FC<MailboxSectionProps> = ({
   };
 
   const sortLettersByDate = () => {
-    uncheckAll()
+    uncheckAll();
     setMail((letters) =>
       JSON.parse(JSON.stringify(letters)).sort((a: Letter, b: Letter) => {
         return (
@@ -120,7 +120,7 @@ export const MailboxSection: React.FC<MailboxSectionProps> = ({
   };
 
   const sortLettersByStatus = () => {
-    uncheckAll()
+    uncheckAll();
     setMail((letters) =>
       JSON.parse(JSON.stringify(letters)).sort((a: Letter, b: Letter) => {
         if (a.status.seen) return 1;
@@ -209,22 +209,24 @@ export const MailboxSection: React.FC<MailboxSectionProps> = ({
         </MailboxName>
         <Controls>
           {!!mail.length && (
-            <ServiceButton
-              onClick={
-                checkedLetters.length === mail.length ? uncheckAll : checkAll
-              }
-            >
-              {checkedLetters.length === mail.length
-                ? "Uncheck all"
-                : "Check all"}
-            </ServiceButton>
+            <>
+              <ServiceButton
+                onClick={
+                  checkedLetters.length === mail.length ? uncheckAll : checkAll
+                }
+              >
+                {checkedLetters.length === mail.length
+                  ? "Uncheck all"
+                  : "Check all"}
+              </ServiceButton>
+              <ServiceButton onClick={sortLettersByDate}>
+                Sort by date
+              </ServiceButton>
+              <ServiceButton onClick={sortLettersByStatus}>
+                Sort by status
+              </ServiceButton>
+            </>
           )}
-          <ServiceButton onClick={sortLettersByDate}>
-            Sort by date
-          </ServiceButton>
-          <ServiceButton onClick={sortLettersByStatus}>
-            Sort by status
-          </ServiceButton>
           <DropdownMenu options={[...returnMenuOptions()]}>
             <ServiceButton>
               <BsThreeDotsVertical />

@@ -150,7 +150,7 @@ const CustomTabsScroll = styled.div<CustomTabsScrollProps>`
     border-radius: 1.5rem;
   }
   @media (max-width: 425px) {
-    height: calc(100vh / 2 - 5.5rem);
+    height: calc(${window.innerHeight}px / 2 - 5.5rem - 4rem);
   }
 `;
 
@@ -169,5 +169,9 @@ const SectionNameInputContainer = styled.div`
     &::placeholder {
       font-style: oblique;
     }
+  }
+  @media (max-width: 425px) {
+    height: 6rem !important;
+    justify-content: space-between;
   }
 `;
