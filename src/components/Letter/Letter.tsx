@@ -71,18 +71,19 @@ export const Letter: React.FC<LetterProps> = ({ sectionType }) => {
   ]);
 
   function moveLetter(e: ChangeEvent<HTMLSelectElement>) {
-    const sectionId = e.target.value;
+    const sectionTypeTo = e.target.value;
     let sectionFrom = mailboxSections[sectionType];
     if (sectionType === MailboxSections.custom) {
       sectionFrom = mailboxSections[sectionType].find(
         (section: MailboxSection) => section.id === params.customSectionId
       );
     }
+    if (!letter) return console.error("No letter in Letter.tsx");
     dispatch(
       mailboxActions.moveLetter({
         from: { sectionType, section: sectionFrom },
         letter,
-        to: { sectionId },
+        to: { sectionType: sectionTypeTo },
       })
     );
   }

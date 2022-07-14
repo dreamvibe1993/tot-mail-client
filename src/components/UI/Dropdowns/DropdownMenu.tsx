@@ -1,12 +1,8 @@
 import React from "react";
 import styled from "styled-components";
+import { fadeIn } from "../../../css/animations/fade-in";
 
-interface OptionsDropdownProps {
-  children: Array<JSX.Element> | JSX.Element;
-  options: Array<{ name: string; handler: (id?: string) => void }>;
-}
-
-export const OptionsDropdown: React.FC<OptionsDropdownProps> = ({
+export const DropdownMenu: React.FC<DropdownMenuProps> = ({
   children,
   options = [],
 }) => {
@@ -78,11 +74,13 @@ export const OptionsDropdown: React.FC<OptionsDropdownProps> = ({
     };
   }, [closeDropdown]);
 
+  if (!options.length) return null;
+
   return (
     <DropdownWrapper onClick={openDropdown} id={thisElementId.current}>
-      <div style={{ pointerEvents: "none" }} ref={childrenRef}>
+      <ChildrenWrapper ref={childrenRef}>
         {children}
-      </div>
+      </ChildrenWrapper>
       <Dropdown x={x} y={y} ref={selfRef} isOpen={isOpen}>
         {options.map((o, i) => (
           <div key={o.name + i} onClick={() => o.handler()}>
@@ -93,6 +91,11 @@ export const OptionsDropdown: React.FC<OptionsDropdownProps> = ({
     </DropdownWrapper>
   );
 };
+
+const ChildrenWrapper = styled.div`
+  pointer-events: none;
+  animation: ${fadeIn} .1s linear forwards;
+`
 
 interface DropdownProps {
   x: number;
@@ -110,14 +113,14 @@ const Dropdown = styled.div<DropdownProps>`
   flex-direction: column;
   background-color: white;
   border: 1px solid rgba(0, 0, 0, 0.2);
-  box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.2);
+  /* box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.2); */
   transform: ${(p) => `translate(${p.x}px, ${p.y}px)`};
   display: ${(p) => (p.isOpen ? "initial" : "none")};
   & > * {
     padding: 0.5rem;
     cursor: pointer;
     user-select: none;
-    transition: background-color .15s ease;
+    transition: background-color 0.15s ease;
     &:hover {
       background-color: rgba(0, 0, 0, 0.1);
     }

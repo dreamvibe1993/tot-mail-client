@@ -1,18 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { useRouteMatch } from "react-router";
-import { Link } from "react-router-dom";
 
-import { useAppDispatch, useAppSelector } from "../../redux/hooks/hooks";
-import { ServiceButton } from "../UI/Buttons/ServiceButton/ServiceButton";
-import { ServiceInput } from "../UI/Inputs/ServiceInput";
-import { mailboxActions } from "../../redux/reducers/mailbox/mailboxSlice";
 import { MailClientRoutes } from "../../configs/routes/mail-client-routes";
-import { BsThreeDotsVertical, BsCheck2 } from "react-icons/bs";
-import { CursorWrap } from "../UI/Wraps/CursorWrap";
-import { OptionsDropdown } from "../UI/Dropdowns/OptionsDropdown";
-import { MenuTab } from "../UI/Tabs/MenuTab";
-import { CustomSectionMenuTab } from "../UI/Tabs/CustomSectionMenuTab/CustomSectionMenuTab";
 import { DrawerMenu } from "../DrawerMenu/DrawerMenu";
 
 export const MailClient: React.FC = () => {

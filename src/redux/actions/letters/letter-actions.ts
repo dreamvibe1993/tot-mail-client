@@ -1,5 +1,14 @@
 import { MailboxSections } from "../../../models/types/enums/mailboxes";
 
+interface MoveLetterAction {
+  payload: {
+    from: { sectionType: MailboxSections; section: MailboxSection };
+    letter: Letter;
+    to: { sectionType: string };
+  };
+  type: string;
+}
+
 export const letterActions = {
   deleteLetter: (state: MailboxInitialState, action: Action) => {
     if (action.payload.sectionType === MailboxSections.incoming) {
@@ -38,9 +47,9 @@ export const letterActions = {
       });
     }
   },
-  moveLetter: (state: MailboxInitialState, action: Action) => {
+  moveLetter: (state: MailboxInitialState, action: MoveLetterAction) => {
     const from = action.payload.from.sectionType as keyof typeof state;
-    const to = action.payload.to.sectionId as keyof typeof state;
+    const to = action.payload.to.sectionType as keyof typeof state;
     const letter = action.payload.letter;
 
     if (from === MailboxSections.custom) {

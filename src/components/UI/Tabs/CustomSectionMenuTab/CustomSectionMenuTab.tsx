@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { useAppDispatch } from "../../../../redux/hooks/hooks";
 import { mailboxActions } from "../../../../redux/reducers/mailbox/mailboxSlice";
 import { ServiceButton } from "../../Buttons/ServiceButton/ServiceButton";
-import { OptionsDropdown } from "../../Dropdowns/OptionsDropdown";
+import { DropdownMenu } from "../../Dropdowns/DropdownMenu";
 import { ServiceInput } from "../../Inputs/ServiceInput";
 import { CursorWrap } from "../../Wraps/CursorWrap";
 import { MenuTab } from "../MenuTab";
@@ -89,7 +89,7 @@ export const CustomSectionMenuTab: React.FC<CustomSecMenuTabProps> = ({
       ) : (
         <Link to={`${url}/${section.slug}`}>{section.name}</Link>
       )}
-      <OptionsDropdown
+      <DropdownMenu
         options={[
           {
             name: "удалить",
@@ -102,7 +102,7 @@ export const CustomSectionMenuTab: React.FC<CustomSecMenuTabProps> = ({
         <CursorWrap>
           <BsThreeDotsVertical />
         </CursorWrap>
-      </OptionsDropdown>
+      </DropdownMenu>
     </CustomTab>
   );
 };

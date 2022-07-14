@@ -14,7 +14,7 @@ export const ServiceButton = styled.button`
   white-space: nowrap;
 
   background-color: rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
+  /* border-radius: 10px; */
   border: none;
   font-weight: 600;
   &:hover {

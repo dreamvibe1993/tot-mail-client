@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import styled from "styled-components";
 import { BsFillTrash2Fill } from "react-icons/bs";
 import { SpanWithOverflow } from "../UI/Spans/SpanWithOverflow";
@@ -7,17 +7,21 @@ import { useAppDispatch } from "../../redux/hooks/hooks";
 import { mailboxActions } from "../../redux/reducers/mailbox/mailboxSlice";
 import { MailboxSections } from "../../models/types/enums/mailboxes";
 import { CursorWrap } from "../UI/Wraps/CursorWrap";
+import { BsCheck2 } from "react-icons/bs";
+import { boolean } from "yup/lib/locale";
 
 interface LetterTabProps {
   letter: Letter;
   sectionType: MailboxSections;
   section: MailboxSection;
+  onCheck: Dispatch<SetStateAction<Letter[]>>;
 }
 
 export const LetterTab: React.FC<LetterTabProps> = ({
   letter,
   sectionType,
   section,
+  onCheck = () => {},
 }) => {
   const dispatch = useAppDispatch();
   const { url } = useRouteMatch();
@@ -30,11 +34,25 @@ export const LetterTab: React.FC<LetterTabProps> = ({
     );
   }
 
-  if (!letter) return null;
+  function toggleCheckbox(): void {
+    setCheckboxChecked((prev) => !prev);
+    onCheck((prev) => [...prev, letter]);
+  }
+
+  React.useEffect(() => {
+    return () => {
+      onCheck([]);
+    };
+  }, []);
+
+  if (!letter) return <span>Something went wrong...</span>;
+
   return (
     <Mail>
       <div>
-        <Checkbox></Checkbox>
+        <Checkbox checked={isCheckboxChecked} onClick={toggleCheckbox}>
+          {isCheckboxChecked && <BsCheck2 />}
+        </Checkbox>
       </div>
       <VerticalDivider />
       <Creds>
@@ -83,10 +101,19 @@ const Preview = styled(SpanWithOverflow)`
   color: gray;
 `;
 
-const Checkbox = styled.div`
+interface CheckboxProps {
+  checked: boolean;
+}
+
+const Checkbox = styled.div<CheckboxProps>`
   width: 2rem;
   height: 2rem;
   border: 1px solid gray;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  /* background-color: ${(p) => p.checked && "rgba(0,0,0,.1)"}; */
 `;
 
 const From = styled(SpanWithOverflow)`
