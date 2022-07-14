@@ -6,16 +6,16 @@ import {
   Switch,
   useHistory,
 } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 import "./App.css";
 
 import { MailClient } from "./components/MailClient/MailClient";
 
 /**
- * TODO: 
- * уведомления
+ * TODO:
  * сортировка
- * ограничение по наименованию в кастом табах
  * прочитанные и нет
  */
 
@@ -24,6 +24,7 @@ function App() {
 
   return (
     <BrowserRouter>
+      <ToastContainer autoClose={2500} closeOnClick/>
       <div className="App">
         <Switch>
           <Route exact={true} path={"/"}>

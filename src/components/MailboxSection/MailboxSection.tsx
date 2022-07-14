@@ -15,6 +15,7 @@ import { MailboxSections } from "../../models/types/enums/mailboxes";
 import { DropdownMenu } from "../UI/Dropdowns/DropdownMenu";
 import { mailboxActions } from "../../redux/reducers/mailbox/mailboxSlice";
 import { fadeIn } from "../../css/animations/fade-in";
+import { toast } from "react-toastify";
 
 interface MailboxSectionProps {
   sectionType: MailboxSections;
@@ -114,17 +115,24 @@ export const MailboxSection: React.FC<MailboxSectionProps> = ({
           : "Удалить отмеченные",
       handler: () => {
         deleteCheckedLetters();
+        if (sectionType === MailboxSections.deleted) {
+          toast.success("Письма удалены из вашей почты!");
+        } else {
+          toast.success('Письма перемещены в папку "удаленные".');
+        }
       },
     },
     spam: {
       name: "Переместить в спам",
       handler: () => {
         moveLettersTo(MailboxSections.spam);
+        toast.success('Письма перемещены в папку "спам".');
       },
     },
     incoming: {
       name: "Переместить во входящие",
       handler: () => {
+        toast.success('Письма перемещены в папку "входящие".');
         moveLettersTo(MailboxSections.incoming);
       },
     },
@@ -137,6 +145,7 @@ export const MailboxSection: React.FC<MailboxSectionProps> = ({
         name: `Переместить в ${sec.name}`,
         handler: () => {
           moveLettersTo(sec.id);
+          toast.success(`Письма перемещены в папку "${sec.name}".`);
         },
       }))
       .filter(Boolean);
@@ -217,7 +226,7 @@ export const MailboxSection: React.FC<MailboxSectionProps> = ({
 };
 
 const EmptyPageWrap = styled.div`
-  animation: ${fadeIn} 0.1s ease forwards;
+  animation: ${fadeIn} 0.2s ease forwards;
   max-height: 500px;
 `;
 

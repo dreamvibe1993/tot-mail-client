@@ -2,6 +2,7 @@ import React from "react";
 import { BsThreeDotsVertical, BsCheck2 } from "react-icons/bs";
 import { Link, useRouteMatch } from "react-router-dom";
 import styled from "styled-components";
+import { fadeIn } from "../../../../css/animations/fade-in";
 import { useAppDispatch } from "../../../../redux/hooks/hooks";
 import { mailboxActions } from "../../../../redux/reducers/mailbox/mailboxSlice";
 import { ServiceButton } from "../../Buttons/ServiceButton/ServiceButton";
@@ -74,8 +75,9 @@ export const CustomSectionMenuTab: React.FC<CustomSecMenuTabProps> = ({
             id={thisElementId.current}
             type="text"
             placeholder="Type new section name"
-            value={newSectionName}
+            value={newSectionName.slice(0, 21)}
             onChange={(e) => setNewSectionName(e.target.value)}
+            maxLength={20}
           />
           <ServiceButton
             id={thisElementId.current}
@@ -130,4 +132,6 @@ const CustomTab = styled(MenuTab)`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  animation: ${fadeIn} .2s ease;
+  z-index: 1;
 `;

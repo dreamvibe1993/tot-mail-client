@@ -11,6 +11,7 @@ import { CustomSectionMenuTab } from "../UI/Tabs/CustomSectionMenuTab/CustomSect
 import { mailboxActions } from "../../redux/reducers/mailbox/mailboxSlice";
 import { MenuTab } from "../UI/Tabs/MenuTab";
 import { SpanWithOverflow } from "../UI/Spans/SpanWithOverflow";
+import { fadeIn } from "../../css/animations/fade-in";
 
 export const DrawerMenu = () => {
   const { url } = useRouteMatch();
@@ -84,15 +85,15 @@ export const DrawerMenu = () => {
             </Link>
           )
       )}
-
       <ServiceButton onClick={openSectionNameInput}>+ создать</ServiceButton>
       {isSectionNameInputOpen && (
         <SectionNameInputContainer>
           <ServiceInput
             type="text"
             placeholder="Type new section name"
-            value={newSectionName}
+            value={newSectionName.slice(0, 21)}
             onChange={(e) => setNewSectionName(e.target.value)}
+            maxLength={20}
           />
           <ServiceButton onClick={addNewSection}>
             <BsCheck2 />
@@ -155,6 +156,7 @@ const SectionNameInputContainer = styled.div`
   width: 100%;
   justify-content: stretch;
   overflow: hidden;
+  animation: ${fadeIn} 0.2s ease;
   button {
     width: 30%;
   }
