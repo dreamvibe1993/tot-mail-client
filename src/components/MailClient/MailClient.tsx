@@ -31,7 +31,6 @@ export const MailClient: React.FC = () => {
 const Client = styled.div`
   grid-area: scrn;
   width: 100%;
-  height: 100%;
   border: 1px solid gray;
   display: flex;
   flex-direction: column;
@@ -40,10 +39,10 @@ const Client = styled.div`
 
 const MailClientContainer = styled.div`
   display: grid;
-  grid-template: "drwr scrn" "drwr scrn" / 20% 80%;
+  grid-template: "drwr scrn" 100% "drwr scrn" / 20% 80%;
   width: 100%;
-  height: 100vh;
   padding: 2rem;
+  height: 100vh;
 `;
 
 const Drawer = styled.div`

@@ -18,6 +18,7 @@ export const OptionsDropdown: React.FC<OptionsDropdownProps> = ({
   );
 
   const childrenRef = React.useRef<HTMLDivElement>(null);
+  const selfRef = React.useRef<HTMLDivElement>(null);
 
   const closeDropdown = React.useCallback(
     (e: MouseEvent) => {
@@ -29,13 +30,46 @@ export const OptionsDropdown: React.FC<OptionsDropdownProps> = ({
     [isOpen]
   );
 
-  React.useEffect(() => {
-    const { current: childrenWrapper } = childrenRef;
-    if (!childrenWrapper) return;
-    const clientRect = childrenWrapper.getBoundingClientRect();
-    setX(clientRect.x + clientRect.width);
-    setY(clientRect.y + clientRect.height);
-  }, []);
+  const openDropdown = () => {
+    setIsOpen(true);
+    setDropdownCoords();
+  };
+
+  async function setDropdownCoords() {
+    const { current: childWrapperRef } = childrenRef;
+    const { current: dropdownRef } = selfRef;
+    if (!childWrapperRef || !dropdownRef) {
+      return console.error("Could not get refs in dropdown.");
+    }
+
+    dropdownRef.style.opacity = "0";
+
+    const dropdown: DOMRect = dropdownRef.getBoundingClientRect();
+
+    if (!dropdown.height) {
+      setTimeout(() => {
+        setDropdownCoords();
+      }, 0);
+      return;
+    }
+
+    const child: DOMRect = childWrapperRef.getBoundingClientRect();
+
+    let y = child.y + child.height;
+    let x = child.x + child.width;
+
+    dropdownRef.style.opacity = "1";
+
+    if (y + dropdown.height >= window.innerHeight) {
+      y = child.y - dropdown.height;
+    }
+    if (x + dropdown.width >= window.innerWidth) {
+      x = child.x - dropdown.width;
+    }
+
+    setY(y);
+    setX(x);
+  }
 
   React.useEffect(() => {
     window.addEventListener("click", closeDropdown);
@@ -45,19 +79,17 @@ export const OptionsDropdown: React.FC<OptionsDropdownProps> = ({
   }, [closeDropdown]);
 
   return (
-    <DropdownWrapper onClick={() => setIsOpen(true)} id={thisElementId.current}>
+    <DropdownWrapper onClick={openDropdown} id={thisElementId.current}>
       <div style={{ pointerEvents: "none" }} ref={childrenRef}>
         {children}
       </div>
-      {isOpen && (
-        <Dropdown x={x} y={y}>
-          {options.map((o, i) => (
-            <div key={o.name + i} onClick={() => o.handler()}>
-              {o.name}
-            </div>
-          ))}
-        </Dropdown>
-      )}
+      <Dropdown x={x} y={y} ref={selfRef} isOpen={isOpen}>
+        {options.map((o, i) => (
+          <div key={o.name + i} onClick={() => o.handler()}>
+            {o.name}
+          </div>
+        ))}
+      </Dropdown>
     </DropdownWrapper>
   );
 };
@@ -65,9 +97,11 @@ export const OptionsDropdown: React.FC<OptionsDropdownProps> = ({
 interface DropdownProps {
   x: number;
   y: number;
+  isOpen: boolean;
 }
 
 const Dropdown = styled.div<DropdownProps>`
+  transition: opacity 0.1s ease;
   position: fixed;
   z-index: 10;
   top: 0;
@@ -78,10 +112,12 @@ const Dropdown = styled.div<DropdownProps>`
   border: 1px solid rgba(0, 0, 0, 0.2);
   box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.2);
   transform: ${(p) => `translate(${p.x}px, ${p.y}px)`};
+  display: ${(p) => (p.isOpen ? "initial" : "none")};
   & > * {
     padding: 0.5rem;
     cursor: pointer;
     user-select: none;
+    transition: background-color .15s ease;
     &:hover {
       background-color: rgba(0, 0, 0, 0.1);
     }

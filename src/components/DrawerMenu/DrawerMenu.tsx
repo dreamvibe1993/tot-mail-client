@@ -19,11 +19,12 @@ export const DrawerMenu = () => {
   const dispatch = useAppDispatch();
 
   const [newSectionName, setNewSectionName] = React.useState<string>("");
+  const [drawerHeight, setDrawerHeight] = React.useState<number>(0);
 
   const [isSectionNameInputOpen, setSectionNameInputOpen] =
     React.useState<boolean>(false);
 
-  const ref = React.useRef<HTMLDivElement>(null);
+  const CustomTabsScrollWrapper = React.useRef<HTMLDivElement>(null);
 
   function openSectionNameInput(): void {
     setSectionNameInputOpen(true);
@@ -43,12 +44,33 @@ export const DrawerMenu = () => {
     setSectionNameInputOpen(false);
   }
 
-  const handleScroll = () => {
-    if (!ref.current) return;
-    if (ref.current.scrollHeight > ref.current.clientHeight) {
-      ref.current.style.paddingRight = "1rem";
-    }
-  };
+  const addStylesIfScroll = React.useCallback(
+    function (): void {
+      const { current: tabsScrollWrap } = CustomTabsScrollWrapper;
+      if (!tabsScrollWrap) return;
+      if (tabsScrollWrap.scrollHeight > tabsScrollWrap.clientHeight) {
+        tabsScrollWrap.style.padding = "1rem";
+        tabsScrollWrap.style.backgroundColor = "rgba(0,0,0,.1)";
+        tabsScrollWrap.style.borderTop = "1px solid rgba(0,0,0,.2)";
+        tabsScrollWrap.style.borderBottom = "1px solid rgba(0,0,0,.2)";
+        tabsScrollWrap.style.borderRadius = "5px";
+      }
+    },
+    [CustomTabsScrollWrapper.current]
+  );
+
+  React.useEffect(() => {
+    const { current: tabsScrollWrap } = CustomTabsScrollWrapper;
+    if (!tabsScrollWrap) return;
+    setDrawerHeight(tabsScrollWrap.clientHeight);
+  }, []);
+
+  React.useEffect(() => {
+    window.addEventListener("click", addStylesIfScroll);
+    return () => {
+      window.removeEventListener("click", addStylesIfScroll);
+    };
+  }, []);
 
   return (
     <>
@@ -62,7 +84,7 @@ export const DrawerMenu = () => {
             </Link>
           )
       )}
-      <hr />
+
       <ServiceButton onClick={openSectionNameInput}>+ создать</ServiceButton>
       {isSectionNameInputOpen && (
         <SectionNameInputContainer>
@@ -77,8 +99,12 @@ export const DrawerMenu = () => {
           </ServiceButton>
         </SectionNameInputContainer>
       )}
-      <CustomTabsScroll ref={ref} onScroll={handleScroll}>
-        <CustomTabsContainer className="test">
+      <CustomTabsScroll
+        ref={CustomTabsScrollWrapper}
+        onClick={addStylesIfScroll}
+        drawerHeight={drawerHeight}
+      >
+        <CustomTabsContainer >
           {mailboxSections.customSections.map((section: MailboxSection) => (
             <CustomSectionMenuTab key={section.id} section={section} />
           ))}
@@ -96,36 +122,31 @@ const CustomTabsContainer = styled.div`
   }
 `;
 
-const CustomTabsScroll = styled.div`
-  height: 35rem;
+interface CustomTabsScrollProps {
+  drawerHeight: number
+}
+
+const CustomTabsScroll = styled.div<CustomTabsScrollProps>`
+  flex: ${p => p.drawerHeight ? "none" : 1};
+  height: ${p => p.drawerHeight + "px" || "none"};
+  transition: all 0.2s ease;
   overflow-y: auto;
   &::-webkit-scrollbar {
     width: 1rem;
     background-color: transparent;
     border: none;
     padding-left: 0.5rem;
-    .test {
-      padding-right: 1rem;
-    }
   }
 
   &::-webkit-scrollbar-track {
     background-color: transparent;
     border: none;
-    width: 0.5rem;
-    .test {
-      padding-right: 1rem;
-    }
   }
 
   &::-webkit-scrollbar-thumb {
     background-color: rgba(0, 0, 0, 0.2);
     border: none;
-    width: 0.5rem;
     border-radius: 1.5rem;
-    .test {
-      padding-right: 1rem;
-    }
   }
 `;
 

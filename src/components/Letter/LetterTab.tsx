@@ -14,12 +14,20 @@ interface LetterTabProps {
   section: MailboxSection;
 }
 
-export const LetterTab: React.FC<LetterTabProps> = ({ letter, sectionType, section }) => {
+export const LetterTab: React.FC<LetterTabProps> = ({
+  letter,
+  sectionType,
+  section,
+}) => {
   const dispatch = useAppDispatch();
   const { url } = useRouteMatch();
 
+  const [isCheckboxChecked, setCheckboxChecked] = React.useState(false);
+
   function deleteLetter(): void {
-    dispatch(mailboxActions.deleteLetter({ id: letter.id, sectionType, section }));
+    dispatch(
+      mailboxActions.deleteLetter({ id: letter.id, sectionType, section })
+    );
   }
 
   if (!letter) return null;
@@ -47,6 +55,9 @@ export const LetterTab: React.FC<LetterTabProps> = ({ letter, sectionType, secti
       </Actions>
       <VerticalDivider />
       <SentAt>
+        {new Date(letter.receivedAt).toLocaleString("default", {
+          weekday: "short",
+        }) + " "}
         {new Date(letter.receivedAt).getHours()}:
         {new Date(letter.receivedAt).getMinutes()}
       </SentAt>
@@ -75,7 +86,7 @@ const Preview = styled(SpanWithOverflow)`
 const Checkbox = styled.div`
   width: 2rem;
   height: 2rem;
-  background-color: gray;
+  border: 1px solid gray;
 `;
 
 const From = styled(SpanWithOverflow)`
