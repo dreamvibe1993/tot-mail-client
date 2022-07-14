@@ -24,6 +24,7 @@ const Client = styled.div`
   display: flex;
   flex-direction: column;
   padding: 2rem;
+  overflow-y: auto;
 `;
 
 const MailClientContainer = styled.div`

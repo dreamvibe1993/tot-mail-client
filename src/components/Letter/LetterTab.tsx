@@ -36,7 +36,15 @@ export const LetterTab: React.FC<LetterTabProps> = ({
 
   function toggleCheckbox(): void {
     setCheckboxChecked((prev) => !prev);
-    onCheck((prev) => [...prev, letter]);
+    onCheck((prev) => {
+      if (prev.includes(letter)) {
+        return prev.filter(
+          (checkedLetter: Letter) => checkedLetter.id !== letter.id
+        );
+      } else {
+        return [...new Set([...prev, letter])];
+      }
+    });
   }
 
   React.useEffect(() => {

@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from "uuid";
 import CyrillicToTranslit from "cyrillic-to-translit-js";
 
 interface AddDigitAction {
@@ -63,38 +64,47 @@ export const sectionActions = {
           acc.push(section);
           return acc;
         }
-        for (let i = 0; i < 2; i++) {
-          acc.push(section);
 
-          const nameWithoutDigit = section.name.replace(digitSpaceRegex, "");
+        acc.push(section);
 
-          let sectionCopy = setSectionData(addDigitToName(section.name));
+        const nameWithoutDigit = section.name.replace(digitSpaceRegex, "");
 
-          const sameSectionsDigits = state.customSections
-            .filter((section: MailboxSection) => {
-              const sectionName = sectionCopy.name.replace(digitSpaceRegex, "");
-              return section.name.includes(sectionName);
-            })
-            .map((section: MailboxSection) => {
-              const digit = section.name.match(digitSpaceRegex);
-              if (digit) return Number(digit[0]);
-              return 0;
-            })
-            .sort((a: number, b: number) => a - b);
+        let sectionCopy = setSectionData(addDigitToName(section.name));
 
-          if (sameSectionsDigits.length) {
-            const greatestNumber = sameSectionsDigits.reverse()[0];
-            const newName = addDigitToName(
-              nameWithoutDigit + " " + greatestNumber
-            );
-            sectionCopy = setSectionData(newName);
-          }
+        const sameSectionsDigits = state.customSections
+          .filter((section: MailboxSection) => {
+            const sectionName = sectionCopy.name.replace(digitSpaceRegex, "");
+            return section.name.includes(sectionName);
+          })
+          .map((section: MailboxSection) => {
+            const digit = section.name.match(digitSpaceRegex);
+            if (digit) return Number(digit[0]);
+            return 0;
+          })
+          .sort((a: number, b: number) => a - b);
 
-          section = {
-            ...sectionCopy,
-            letters: section.letters,
-          };
+        if (sameSectionsDigits.length) {
+          const greatestNumber = sameSectionsDigits.reverse()[0];
+          const newName = addDigitToName(
+            nameWithoutDigit + " " + greatestNumber
+          );
+          sectionCopy = setSectionData(newName);
         }
+
+        const letters = JSON.parse(JSON.stringify(section.letters));
+
+        const lettersNewIds = letters.map((letter: Letter) => {
+          letter.id = uuidv4();
+          return letter;
+        });
+
+        const copy = {
+          ...sectionCopy,
+          letters: lettersNewIds,
+        };
+
+        acc.push(copy);
+
         return acc;
       },
       []

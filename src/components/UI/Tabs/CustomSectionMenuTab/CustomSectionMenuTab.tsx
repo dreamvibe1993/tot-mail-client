@@ -67,7 +67,7 @@ export const CustomSectionMenuTab: React.FC<CustomSecMenuTabProps> = ({
   }
   
   return (
-    <CustomTab id={thisElementId.current} onScroll={() => console.log('scroll')}>
+    <CustomTab id={thisElementId.current}>
       {isTabRenaming ? (
         <TabNameInputs>
           <SpecialInput

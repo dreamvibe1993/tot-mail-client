@@ -1,5 +1,7 @@
 import React from "react";
 import styled from "styled-components";
+import { Redirect, useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 import { useAppSelector } from "../../redux/hooks/hooks";
 
@@ -7,11 +9,12 @@ import { LetterTab } from "../Letter/LetterTab";
 import { ServiceButton } from "../UI/Buttons/ServiceButton/ServiceButton";
 
 import { BsThreeDotsVertical } from "react-icons/bs";
+import RidingTrain from "../../assets/images/gif/riding-train-0.gif";
+
 import { MailboxSections } from "../../models/types/enums/mailboxes";
-import { useParams } from "react-router-dom";
 import { DropdownMenu } from "../UI/Dropdowns/DropdownMenu";
-import { useDispatch } from "react-redux";
 import { mailboxActions } from "../../redux/reducers/mailbox/mailboxSlice";
+import { fadeIn } from "../../css/animations/fade-in";
 
 interface MailboxSectionProps {
   sectionType: MailboxSections;
@@ -121,52 +124,65 @@ export const MailboxSection: React.FC<MailboxSectionProps> = ({
 
   function returnMenuOptions(): Array<DropdownMenuOption> {
     if (!checkedLetters.length) return [];
+    const customSectionsHandlers = customSections
+      .map((sec: MailboxSection) => ({
+        name: `Переместить в ${sec.name}`,
+        handler: () => {
+          moveLettersTo(sec.id);
+        },
+      }))
+      .filter(Boolean);
     if (sectionType === MailboxSections.incoming) {
-      return [handlers.delete, handlers.spam];
+      return [handlers.delete, handlers.spam, ...customSectionsHandlers];
     }
     if (sectionType === MailboxSections.sent) {
-      return [handlers.delete];
+      return [handlers.delete, ...customSectionsHandlers];
     }
     if (sectionType === MailboxSections.drafts) {
-      return [handlers.delete];
+      return [handlers.delete, ...customSectionsHandlers];
     }
     if (sectionType === MailboxSections.spam) {
-      return [handlers.delete];
+      return [handlers.delete, ...customSectionsHandlers];
     }
     if (sectionType === MailboxSections.deleted) {
-      return [handlers.delete];
+      return [handlers.delete, ...customSectionsHandlers];
     }
-    return [handlers.delete];
+    return [...customSectionsHandlers, handlers.delete];
   }
 
-  if (!mail.length) return <span>No mail yet!</span>;
-
-  if (!section) return <span>This section does not exist!</span>;
-
-  return (
-    <MailBoxContainer>
+  const TopBarComponent = () => {
+    return (
       <TopBar>
-        <MailboxName>{section.name.toUpperCase()}</MailboxName>
+        <MailboxName>{section && section.name.toUpperCase()}</MailboxName>
         <Controls>
-          <DropdownMenu
-            options={[
-              ...returnMenuOptions(),
-              ...customSections
-                .map((sec: MailboxSection) => ({
-                  name: `Переместить в ${sec.name}`,
-                  handler: () => {
-                    moveLettersTo(sec.id);
-                  },
-                }))
-                .filter(Boolean),
-            ]}
-          >
+          <DropdownMenu options={[...returnMenuOptions()]}>
             <ServiceButton>
               <BsThreeDotsVertical />
             </ServiceButton>
           </DropdownMenu>
         </Controls>
       </TopBar>
+    );
+  };
+
+  if (!section) return <Redirect to="/mailbox/incoming" />;
+
+  if (!mail.length)
+    return (
+      <MailBoxContainer>
+        <TopBarComponent />
+        <EmptyPageWrap>
+          <h2 style={{ textAlign: "center" }}>This folder is empty</h2>
+          <ImgWrapper>
+            <Image src={RidingTrain} alt="This folder is empty" />
+          </ImgWrapper>
+        </EmptyPageWrap>
+      </MailBoxContainer>
+    );
+
+  return (
+    <MailBoxContainer>
+      <TopBarComponent />
       {mail.map((letter: Letter) => (
         <LetterTab
           letter={letter}
@@ -179,6 +195,22 @@ export const MailboxSection: React.FC<MailboxSectionProps> = ({
     </MailBoxContainer>
   );
 };
+
+const EmptyPageWrap = styled.div`
+  animation: ${fadeIn} 0.1s ease forwards;
+  max-height: 500px;
+`;
+
+const Image = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+`;
+
+const ImgWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+`;
 
 const MailboxName = styled.h2`
   padding: 0;

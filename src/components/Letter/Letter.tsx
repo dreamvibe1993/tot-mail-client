@@ -1,13 +1,15 @@
 import React, { ChangeEvent } from "react";
 import styled from "styled-components";
 import ReactMarkdown from "react-markdown";
-
-import { ServiceButton } from "../UI/Buttons/ServiceButton/ServiceButton";
-import { BsReplyFill, BsThreeDotsVertical } from "react-icons/bs";
-import { useAppDispatch, useAppSelector } from "../../redux/hooks/hooks";
 import { useParams } from "react-router";
+import { useHistory } from "react-router-dom";
+
+import { BsX as BsXLg } from "react-icons/bs";
+
+import { useAppDispatch, useAppSelector } from "../../redux/hooks/hooks";
 import { MailboxSections } from "../../models/types/enums/mailboxes";
 import { mailboxActions } from "../../redux/reducers/mailbox/mailboxSlice";
+import { CursorWrap } from "../UI/Wraps/CursorWrap";
 
 interface LetterProps {
   sectionType: MailboxSections;
@@ -20,6 +22,8 @@ export const Letter: React.FC<LetterProps> = ({ sectionType }) => {
   const sections = useAppSelector((state) => state.mailbox);
   const dispatch = useAppDispatch();
   const params: { id: string; customSectionId: string } = useParams();
+  const history = useHistory();
+
   const [letter, setLetter] = React.useState<Letter | undefined>();
 
   const findLetter = React.useCallback(
@@ -88,60 +92,88 @@ export const Letter: React.FC<LetterProps> = ({ sectionType }) => {
     );
   }
 
+  const closeLetter = () => {
+    const slugs = history.location.pathname.split("/");
+    const oneSlugBack = slugs.slice(0, slugs.length - 1);
+    const url = oneSlugBack.join("/");
+    history.push(url);
+  };
+
   if (!letter) return <span>Loading...</span>;
 
   return (
-    <div>
-      <TopBar>
-        <UserPersonal>
-          <Avatar />
-          <Creds>
-            <Name>{letter.sender.name}</Name>
-            <Email>{letter.sender.email}</Email>
-          </Creds>
-        </UserPersonal>
-        <Controls>
-          <Select name="select" onChange={moveLetter}>
-            <option>Переместить вo...</option>
-            {Object.values(sections).map(
-              (sec: MailboxSection, i) =>
-                !Array.isArray(sec) && (
-                  <option key={sec.id} value={Object.keys(sections)[i]}>
-                    {sec.name}
-                  </option>
-                )
-            )}
-            {customSections.map((sec: MailboxSection) => (
-              <option key={sec.id} value={sec.id}>
-                {sec.name}
-              </option>
-            ))}
-          </Select>
-          <ServiceButton>
-            <BsReplyFill />
-          </ServiceButton>
-          <ServiceButton>
-            <BsThreeDotsVertical />
-          </ServiceButton>
-        </Controls>
-      </TopBar>
-      <LetterContainer>
-        <LetterLayout>
-          <ReactMarkdown>{letter.message}</ReactMarkdown>
-        </LetterLayout>
-      </LetterContainer>
-    </div>
+    <>
+      <WindowControls>
+        <CursorWrap>
+          <BsXLg onClick={closeLetter} />
+        </CursorWrap>
+      </WindowControls>
+      <LetterWindowContainer>
+        <TopBar>
+          <UserPersonal>
+            <Avatar />
+            <Creds>
+              <Name>{letter.sender.name}</Name>
+              <Email>{letter.sender.email}</Email>
+            </Creds>
+          </UserPersonal>
+          <Controls>
+            <Select name="select" onChange={moveLetter}>
+              <option>Переместить в...</option>
+              {Object.values(sections).map(
+                (sec: MailboxSection, i) =>
+                  !Array.isArray(sec) && (
+                    <option key={sec.id} value={Object.keys(sections)[i]}>
+                      {sec.name}
+                    </option>
+                  )
+              )}
+              {customSections.map((sec: MailboxSection) => (
+                <option key={sec.id} value={sec.id}>
+                  {sec.name}
+                </option>
+              ))}
+            </Select>
+          </Controls>
+        </TopBar>
+        <LetterContainer>
+          <LetterLayout>
+            <ReactMarkdown>{letter.message}</ReactMarkdown>
+          </LetterLayout>
+        </LetterContainer>
+      </LetterWindowContainer>
+    </>
   );
 };
+
+const LetterWindowContainer = styled.div`
+  padding: 2rem;
+  background-color: rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  height: 100%;
+  overflow-y: auto;
+  flex: 1;
+`;
+
+const WindowControls = styled.div`
+  height: 2rem;
+  margin-bottom: 1rem;
+  svg {
+    width: 2rem;
+    height: 100%;
+  }
+`;
 
 const Select = styled.select`
   padding: 1rem;
 `;
 
 const LetterLayout = styled.div`
-  border: 1px solid gray;
-  height: 100%;
+  border: 1px solid rgba(0, 0, 0, 0.2);
   padding: 2rem;
+  background-color: white;
+  box-shadow: 0px 5px 5px 2px rgba(0, 0, 0, 0.1);
+
   p {
     font-size: 1.8rem;
   }
@@ -150,6 +182,7 @@ const LetterLayout = styled.div`
 const LetterContainer = styled.div`
   flex: 1;
   padding-top: 2rem;
+  overflow-y: auto;
 `;
 
 const Controls = styled.div`

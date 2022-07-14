@@ -104,7 +104,7 @@ export const DrawerMenu = () => {
         onClick={addStylesIfScroll}
         drawerHeight={drawerHeight}
       >
-        <CustomTabsContainer >
+        <CustomTabsContainer>
           {mailboxSections.customSections.map((section: MailboxSection) => (
             <CustomSectionMenuTab key={section.id} section={section} />
           ))}
@@ -123,12 +123,12 @@ const CustomTabsContainer = styled.div`
 `;
 
 interface CustomTabsScrollProps {
-  drawerHeight: number
+  drawerHeight: number;
 }
 
 const CustomTabsScroll = styled.div<CustomTabsScrollProps>`
-  flex: ${p => p.drawerHeight ? "none" : 1};
-  height: ${p => p.drawerHeight + "px" || "none"};
+  flex: ${(p) => (p.drawerHeight ? "none" : 1)};
+  height: ${(p) => p.drawerHeight + "px" || "none"};
   transition: all 0.2s ease;
   overflow-y: auto;
   &::-webkit-scrollbar {
@@ -161,5 +161,8 @@ const SectionNameInputContainer = styled.div`
   input {
     width: 70%;
     margin-right: 1rem;
+    &::placeholder {
+      font-style: oblique;
+    }
   }
 `;
