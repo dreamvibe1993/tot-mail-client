@@ -8,6 +8,9 @@
     "name": "Tony Doe",
     "email": "kiki@doe.uk"
   },
+  "status": {
+    "seen": false
+  },
   "sentAt": "2022-07-12T08:19:34.336Z",
   "receivedAt": "2022-07-12T08:19:34.336Z",
   "topic": "Happy lnawifugna!",

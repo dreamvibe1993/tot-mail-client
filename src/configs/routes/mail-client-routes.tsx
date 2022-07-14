@@ -2,7 +2,7 @@ import React from "react";
 import { Route, Switch, useRouteMatch } from "react-router-dom";
 import { Letter } from "../../components/Letter/Letter";
 import { MailboxSection } from "../../components/MailboxSection/MailboxSection";
-import { MailboxSections } from "../../models/types/enums/mailboxes";
+import { MailboxSections } from "../../models/types/enums/mailbox-sections";
 
 export const MailClientRoutes = () => {
   const { path } = useRouteMatch();

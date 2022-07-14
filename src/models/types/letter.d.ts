@@ -8,6 +8,9 @@ interface Letter {
     name: string;
     email: string;
   };
+  status: {
+    seen: boolean;
+  };
   topic: string;
   sentAt: string;
   receivedAt: string;

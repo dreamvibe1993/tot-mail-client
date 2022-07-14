@@ -1,21 +1,22 @@
 import React, { Dispatch, SetStateAction } from "react";
 import styled from "styled-components";
-import { BsFillTrash2Fill } from "react-icons/bs";
-import { SpanWithOverflow } from "../UI/Spans/SpanWithOverflow";
 import { Link, useRouteMatch } from "react-router-dom";
+
+import { BsFillTrash2Fill } from "react-icons/bs";
+import { BsCheck2 } from "react-icons/bs";
+
+import { SpanWithOverflow } from "../UI/Spans/SpanWithOverflow";
 import { useAppDispatch } from "../../redux/hooks/hooks";
 import { mailboxActions } from "../../redux/reducers/mailbox/mailboxSlice";
-import { MailboxSections } from "../../models/types/enums/mailboxes";
+import { MailboxSections } from "../../models/types/enums/mailbox-sections";
 import { CursorWrap } from "../UI/Wraps/CursorWrap";
-import { BsCheck2 } from "react-icons/bs";
-import { boolean } from "yup/lib/locale";
 
 interface LetterTabProps {
   letter: Letter;
   sectionType: MailboxSections;
   section: MailboxSection;
   onCheck: Dispatch<SetStateAction<Letter[]>>;
-  isChecked: boolean
+  isChecked: boolean;
 }
 
 export const LetterTab: React.FC<LetterTabProps> = ({
@@ -23,7 +24,7 @@ export const LetterTab: React.FC<LetterTabProps> = ({
   sectionType,
   section,
   onCheck = () => {},
-  isChecked = false
+  isChecked = false,
 }) => {
   const dispatch = useAppDispatch();
   const { url } = useRouteMatch();
@@ -55,7 +56,11 @@ export const LetterTab: React.FC<LetterTabProps> = ({
   if (!letter) return <span>Something went wrong...</span>;
 
   return (
-    <Mail>
+    <LetterTabContainer>
+      <Status seen={letter.status.seen}>
+        {letter.status.seen ? "seen" : "new"}
+      </Status>
+      <VerticalDivider />
       <div>
         <Checkbox checked={isChecked} onClick={toggleCheckbox}>
           {isChecked && <BsCheck2 />}
@@ -86,9 +91,17 @@ export const LetterTab: React.FC<LetterTabProps> = ({
         {new Date(letter.receivedAt).getHours()}:
         {new Date(letter.receivedAt).getMinutes()}
       </SentAt>
-    </Mail>
+    </LetterTabContainer>
   );
 };
+
+interface StatusProps {
+  seen: boolean;
+}
+const Status = styled.span<StatusProps>`
+  font-weight: 600;
+  color: ${(p) => (p.seen ? "rgba(0,0,0,.3)" : "green")};
+`;
 
 const VerticalDivider = styled.div`
   height: 50%;
@@ -140,7 +153,7 @@ const Topic = styled(SpanWithOverflow)`
 `;
 const Actions = styled.span``;
 
-const Mail = styled.div`
+const LetterTabContainer = styled.div`
   border: 1px solid grey;
   border-radius: 15px;
   padding: 2rem 2rem;

@@ -7,9 +7,10 @@ import {
   useHistory,
 } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
 
 import "./App.css";
+import { Home } from "./components/Home/Home";
 
 import { MailClient } from "./components/MailClient/MailClient";
 
@@ -24,11 +25,11 @@ function App() {
 
   return (
     <BrowserRouter>
-      <ToastContainer autoClose={2500} closeOnClick/>
+      <ToastContainer autoClose={2500} closeOnClick />
       <div className="App">
         <Switch>
           <Route exact={true} path={"/"}>
-            <Link to={"/mailbox"}>Enter to mailbox</Link>
+            <Home />
           </Route>
           <Route path={"/mailbox"}>
             <MailClient />

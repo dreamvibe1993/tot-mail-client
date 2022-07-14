@@ -1,7 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import { Redirect, useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 
 import { useAppSelector } from "../../redux/hooks/hooks";
 
@@ -11,11 +12,10 @@ import { ServiceButton } from "../UI/Buttons/ServiceButton/ServiceButton";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import RidingTrain from "../../assets/images/gif/riding-train-0.gif";
 
-import { MailboxSections } from "../../models/types/enums/mailboxes";
+import { MailboxSections } from "../../models/types/enums/mailbox-sections";
 import { DropdownMenu } from "../UI/Dropdowns/DropdownMenu";
 import { mailboxActions } from "../../redux/reducers/mailbox/mailboxSlice";
 import { fadeIn } from "../../css/animations/fade-in";
-import { toast } from "react-toastify";
 
 interface MailboxSectionProps {
   sectionType: MailboxSections;
@@ -29,10 +29,16 @@ export const MailboxSection: React.FC<MailboxSectionProps> = ({
   const mailboxSections = useAppSelector((state) => state.mailbox);
   const dispatch = useDispatch();
   const params: { customSectionId: string } = useParams();
+  const history = useHistory();
 
   const [mail, setMail] = React.useState<Array<Letter>>([]);
   const [section, setSection] = React.useState<MailboxSection | null>();
   const [checkedLetters, setCheckedLetters] = React.useState<Array<Letter>>([]);
+
+  const goToIncoming = (errMessage: string) => {
+    history.push("/mailbox/incoming");
+    console.error(errMessage);
+  };
 
   React.useEffect(() => {
     if (sectionType === MailboxSections.custom) {
@@ -40,18 +46,20 @@ export const MailboxSection: React.FC<MailboxSectionProps> = ({
         return console.error("No custom section id in mailbox!");
 
       if (!customSections.length)
-        return console.error("No custom sections in mailbox!");
+        return goToIncoming("No custom sections in mailbox!");
 
       const section = customSections.find(
         (section: MailboxSection) => section.id === params.customSectionId
       );
 
-      if (!section) return console.error("No custom section in mailbox!");
+      if (!section) return goToIncoming("No custom section in mailbox!");
 
       setMail(section.letters);
       setSection(section);
     } else {
-      setMail(mailboxSections[sectionType].letters);
+      const section = mailboxSections[sectionType];
+      if (!section) return goToIncoming("No custom section in mailbox!");
+      setMail(section.letters);
       setSection(mailboxSections[sectionType]);
     }
   }, [
@@ -193,8 +201,6 @@ export const MailboxSection: React.FC<MailboxSectionProps> = ({
     );
   };
 
-  if (!section) return <Redirect to="/mailbox/incoming" />;
-
   if (!mail.length)
     return (
       <MailBoxContainer>
@@ -207,6 +213,8 @@ export const MailboxSection: React.FC<MailboxSectionProps> = ({
         </EmptyPageWrap>
       </MailBoxContainer>
     );
+
+  if (!section) return <span>Loading...</span>;
 
   return (
     <MailBoxContainer>

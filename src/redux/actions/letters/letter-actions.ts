@@ -1,10 +1,19 @@
-import { MailboxSections } from "../../../models/types/enums/mailboxes";
+import { MailboxSections } from "../../../models/types/enums/mailbox-sections";
 
 interface MoveLetterAction {
   payload: {
     from: { sectionType: MailboxSections; section: MailboxSection };
     letter: Letter;
     to: { sectionType: string };
+  };
+  type: string;
+}
+
+interface ChangeLetterStatusAction {
+  payload: {
+    sectionType: MailboxSections;
+    sectionId: string;
+    letterId: string;
   };
   type: string;
 }
@@ -80,5 +89,27 @@ export const letterActions = {
       const updatedLetters = [...state[to].letters, action.payload.letter];
       state[to].letters = updatedLetters;
     }
+  },
+  changeLetterStatus: (state: MailboxInitialState, action: ChangeLetterStatusAction) => {
+    const sectionType = action.payload.sectionType as keyof typeof state;
+
+    const setSeenStatus = (letter: Letter) => {
+      if (action.payload.letterId === letter.id) {
+        letter.status.seen = true;
+      }
+      return letter;
+    };
+
+    if (Array.isArray(state[sectionType])) {
+      state[sectionType] = state[sectionType].map((section: MailboxSection) => {
+        if (section.id === action.payload.sectionId) {
+          section.letters = section.letters.map(setSeenStatus);
+        }
+        return section;
+      });
+      return;
+    }
+
+    state[sectionType].letters = state[sectionType].letters.map(setSeenStatus);
   },
 };

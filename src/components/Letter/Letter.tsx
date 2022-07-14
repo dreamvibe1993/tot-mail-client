@@ -7,7 +7,7 @@ import { useHistory } from "react-router-dom";
 import { BsX as BsXLg } from "react-icons/bs";
 
 import { useAppDispatch, useAppSelector } from "../../redux/hooks/hooks";
-import { MailboxSections } from "../../models/types/enums/mailboxes";
+import { MailboxSections } from "../../models/types/enums/mailbox-sections";
 import { mailboxActions } from "../../redux/reducers/mailbox/mailboxSlice";
 import { CursorWrap } from "../UI/Wraps/CursorWrap";
 
@@ -32,6 +32,17 @@ export const Letter: React.FC<LetterProps> = ({ sectionType }) => {
     },
     [params.id]
   );
+
+  React.useEffect(() => {
+    if (!letter) return;
+    dispatch(
+      mailboxActions.changeLetterStatus({
+        sectionType,
+        sectionId: params.customSectionId,
+        letterId: letter.id,
+      })
+    );
+  }, [letter]);
 
   React.useEffect(() => {
     if (!params.id) return;
