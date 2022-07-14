@@ -58,11 +58,26 @@ const ImgWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  img {
+    object-fit: contain;
+    width: 100%;
+    /* height: 100%; */
+  }
+
+  @media (max-width: 425px) {
+    justify-content: flex-start;
+    align-items: flex-start;
+    height: calc(100% - 5.5rem - 2rem);
+  }
 `;
 
 const TextWrapper = styled.div`
   text-align: left;
   width: 100%;
+
+  @media (max-width: 425px) {
+    margin-bottom: 2rem;
+  }
 `;
 
 const FakeLoaderContainer = styled.div`
@@ -70,4 +85,5 @@ const FakeLoaderContainer = styled.div`
   font-size: 2.4rem;
   animation: ${fadeIn} 0.5s linear;
   font-weight: 500;
+  padding: 2rem;
 `;

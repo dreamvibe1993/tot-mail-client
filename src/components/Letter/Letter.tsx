@@ -74,6 +74,7 @@ export const Letter: React.FC<LetterProps> = ({ sectionType }) => {
       );
     }
     if (letter) setLetter(letter);
+    else closeLetter();
   }, [
     deleted.letters,
     drafts.letters,
@@ -164,6 +165,9 @@ const LetterWindowContainer = styled.div`
   height: 100%;
   overflow-y: auto;
   flex: 1;
+  @media (max-width: 425px) {
+    padding: .5rem;
+  }
 `;
 
 const WindowControls = styled.div`
@@ -238,4 +242,11 @@ const Avatar = styled.div`
 const TopBar = styled.div`
   display: flex;
   justify-content: space-between;
+  @media (max-width: 425px) {
+    flex-direction: column;
+    align-items: center;
+    & > * {
+      margin-top: 1rem;
+    }
+  }
 `;

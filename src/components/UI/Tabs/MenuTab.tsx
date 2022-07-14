@@ -13,4 +13,9 @@ export const MenuTab: any = styled.div<Props>`
   background-color: white;
   transform: ${(p) => p.open && `translateX(2.1rem)`};
   border-right: ${(p) => p.open && `none`};
+  @media (max-width: 425px) {
+    transform: none;
+    border-right: 1px solid gray;
+    border-radius: 0rem;
+  }
 `;

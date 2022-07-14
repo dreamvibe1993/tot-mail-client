@@ -149,6 +149,9 @@ const CustomTabsScroll = styled.div<CustomTabsScrollProps>`
     border: none;
     border-radius: 1.5rem;
   }
+  @media (max-width: 425px) {
+    height: calc(100vh / 2 - 5.5rem);
+  }
 `;
 
 const SectionNameInputContainer = styled.div`

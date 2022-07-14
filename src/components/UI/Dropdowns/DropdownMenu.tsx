@@ -56,12 +56,20 @@ export const DropdownMenu: React.FC<DropdownMenuProps> = ({
 
     dropdownRef.style.opacity = "1";
 
+    if (window.innerWidth < 425) {
+      const onePercent = window.innerHeight / 100;
+      const seventyFive = onePercent * 75;
+      x += seventyFive;
+      y -= 55; // header height  
+    }
+    
     if (y + dropdown.height >= window.innerHeight) {
       y = child.y - dropdown.height;
     }
     if (x + dropdown.width >= window.innerWidth) {
       x = child.x - dropdown.width;
     }
+    
 
     setY(y);
     setX(x);
@@ -78,9 +86,7 @@ export const DropdownMenu: React.FC<DropdownMenuProps> = ({
 
   return (
     <DropdownWrapper onClick={openDropdown} id={thisElementId.current}>
-      <ChildrenWrapper ref={childrenRef}>
-        {children}
-      </ChildrenWrapper>
+      <ChildrenWrapper ref={childrenRef}>{children}</ChildrenWrapper>
       <Dropdown x={x} y={y} ref={selfRef} isOpen={isOpen}>
         {options.map((o, i) => (
           <div key={o.name + i} onClick={() => o.handler()}>
@@ -94,8 +100,8 @@ export const DropdownMenu: React.FC<DropdownMenuProps> = ({
 
 const ChildrenWrapper = styled.div`
   pointer-events: none;
-  animation: ${fadeIn} .1s linear forwards;
-`
+  animation: ${fadeIn} 0.1s linear forwards;
+`;
 
 interface DropdownProps {
   x: number;
@@ -124,6 +130,9 @@ const Dropdown = styled.div<DropdownProps>`
     &:hover {
       background-color: rgba(0, 0, 0, 0.1);
     }
+  }
+  @media (max-width: 425px) {
+    /* transform: ${(p) => `translate(calc(${p.x}px + 75%), calc(${p.y - 55}px))`}; */
   }
 `;
 

@@ -16,6 +16,7 @@ import { MailboxSections } from "../../models/types/enums/mailbox-sections";
 import { DropdownMenu } from "../UI/Dropdowns/DropdownMenu";
 import { mailboxActions } from "../../redux/reducers/mailbox/mailboxSlice";
 import { fadeIn } from "../../css/animations/fade-in";
+import { SpanWithOverflow } from "../UI/Spans/SpanWithOverflow";
 
 interface MailboxSectionProps {
   sectionType: MailboxSections;
@@ -199,7 +200,11 @@ export const MailboxSection: React.FC<MailboxSectionProps> = ({
   const TopBarComponent = () => {
     return (
       <TopBar>
-        <MailboxName>{section && section.name.toUpperCase()}</MailboxName>
+        <MailboxName>
+          <SpanWithOverflow>
+            {section && section.name.toUpperCase()}
+          </SpanWithOverflow>
+        </MailboxName>
         <Controls>
           {!!mail.length && (
             <ServiceButton
@@ -279,6 +284,9 @@ const ImgWrapper = styled.div`
 const MailboxName = styled.h2`
   padding: 0;
   margin: 0;
+  @media (max-width: 425px) {
+    max-width: 45%;
+  }
 `;
 
 const Controls = styled.div`
@@ -294,6 +302,16 @@ const Controls = styled.div`
   & > * {
     &:not(:last-child) {
       margin-right: 1rem;
+    }
+  }
+  @media (max-width: 425px) {
+    flex-direction: column;
+    align-items: flex-end;
+    & > * {
+      &:not(:last-child) {
+        margin-right: 0rem;
+        margin-bottom: 1rem;
+      }
     }
   }
 `;

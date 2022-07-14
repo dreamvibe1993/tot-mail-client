@@ -59,6 +59,9 @@ const Heading = styled.h1`
 const Block = styled.div`
   width: 50%;
   font-size: 1.6rem;
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
 const HomeContainer = styled.div`
