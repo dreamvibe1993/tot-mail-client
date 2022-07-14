@@ -1,11 +1,11 @@
 self.__precacheManifest = [
   {
-    "revision": "ffd6b444ceb865485cd9",
+    "revision": "8f2120a38fba20077008",
     "url": "/tot-mail-client/static/css/main.643141e7.chunk.css"
   },
   {
-    "revision": "ffd6b444ceb865485cd9",
-    "url": "/tot-mail-client/static/js/main.aded7385.chunk.js"
+    "revision": "8f2120a38fba20077008",
+    "url": "/tot-mail-client/static/js/main.0b7a507f.chunk.js"
   },
   {
     "revision": "4ba2cc356d272e9a8409",
@@ -32,7 +32,7 @@ self.__precacheManifest = [
     "url": "/tot-mail-client/static/media/riding-train-0.656685f9.gif"
   },
   {
-    "revision": "59c9eb5c79a38fee9e5b939977585c69",
+    "revision": "744629f3aa077653e61187d1cd11672d",
     "url": "/tot-mail-client/index.html"
   }
 ];
