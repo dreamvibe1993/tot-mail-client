@@ -145,7 +145,10 @@ const Email = styled(SpanWithOverflow)`
   font-size: 1.4rem;
 `;
 
-const SentAt = styled.span``;
+const SentAt = styled.span`
+  min-width: 8.7rem;
+  text-align: center;
+`;
 
 const Topic = styled(SpanWithOverflow)`
   width: 12%;

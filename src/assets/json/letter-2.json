@@ -1,11 +1,11 @@
 {
   "id": "letter-2",
   "sender": {
-    "name": "Jane Mike",
+    "name": "Иван Иванов",
     "email": "mane@doe.ua"
   },
   "recipient": {
-    "name": "John Cike",
+    "name": "Петров Петя",
     "email": "stain@doe.uk"
   },
   "status": {
@@ -13,6 +13,6 @@
   },
   "sentAt": "2022-07-12T08:19:34.336Z",
   "receivedAt": "2022-07-08T10:19:34.336Z",
-  "topic": "Wololo birthday",
-  "message": "# Hey John! \nEiusmod eu nisi ullamco quis do. Consectetur laborum consectetur culpa ullamco enim cupidatat amet. \nUllamco veniam ad consequat aliquip occaecat esse ut quis enim nostrud et ex sint elit."
+  "topic": "Вололо...",
+  "message": "# Что? \nculpa ullamco enim cupidatat amet. \nUllamco veniam ad consequat aliquip occaecat esse ut quis enim nostrud et ex sint elit."
 }

@@ -1,7 +1,7 @@
 {
   "id": "letter-7",
   "sender": {
-    "name": "Jane Doe",
+    "name": "Неизвестен",
     "email": "jane@doe.ua"
   },
   "recipient": {
@@ -13,6 +13,6 @@
   },
   "sentAt": "2022-07-12T08:19:34.336Z",
   "receivedAt": "2022-07-17T08:19:34.336Z",
-  "topic": "Happy birthday",
+  "topic": "Деньги и спам...",
   "message": "# Hafwfawf culpa ullamco enim cupidawfaat aliquip occaecat esse ut quis enim nostrud et ex sint elit."
 }

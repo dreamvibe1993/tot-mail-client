@@ -1,8 +1,8 @@
 {
   "id": "letter-5",
   "sender": {
-    "name": "Plain Doe",
-    "email": "Plain@doe.ua"
+    "name": "Кролик",
+    "email": "rabbit@doe.ua"
   },
   "recipient": {
     "name": "Daria Doe",
@@ -14,5 +14,5 @@
   "sentAt": "2022-07-12T08:19:34.336Z",
   "receivedAt": "2022-07-19T01:19:34.336Z",
   "topic": "Yellow submarine",
-  "message": "# Hey Douche! \nEiusmod eu nisi ullamco quis do. Consectetur laborum consectetur culpa ullamco enim cupidatat amet. \nUllamco veniam ad consequat aliquip occaecat esse ut quis enim nostrud et ex sint elit."
+  "message": "# Ullamco veniam \nUllamco veniam ad consequat aliquip occaecat esse ut quis enim nostrud et ex sint elit."
 }

@@ -1,5 +1,6 @@
 import React from "react";
 import { Route, Switch, useRouteMatch } from "react-router-dom";
+import { FakeLoader } from "../../components/FakeLoader/FakeLoader";
 import { Letter } from "../../components/Letter/Letter";
 import { MailboxSection } from "../../components/MailboxSection/MailboxSection";
 import { MailboxSections } from "../../models/types/enums/mailbox-sections";
@@ -8,6 +9,9 @@ export const MailClientRoutes = () => {
   const { path } = useRouteMatch();
   return (
     <Switch>
+      <Route path={`${path}`} exact={true}>
+        <FakeLoader />
+      </Route>
       <Route path={`${path}/incoming`} exact={true}>
         <MailboxSection sectionType={MailboxSections.incoming} />
       </Route>

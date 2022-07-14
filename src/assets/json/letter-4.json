@@ -2,7 +2,7 @@
   "id": "letter-4",
   "sender": {
     "name": "Bar Doe",
-    "email": "Bar@doe.ua"
+    "email": "culpa@doe.ua"
   },
   "recipient": {
     "name": "Baz Doe",
@@ -13,6 +13,6 @@
     "seen": false
   },
   "receivedAt": "2022-07-21T08:19:34.336Z",
-  "topic": "Happy sadness!",
-  "message": "# Hey Anthony! \nEiusmod eu nisi ullamco quis do. Consectetur laborum consectetur culpa ullamco enim cupidatat amet. \nUllamco veniam ad consequat aliquip occaecat esse ut quis enim nostrud et ex sint elit."
+  "topic": "Нет темы",
+  "message": "# Hey nEiusmod! \nEiusmod. \nUllamco veniam ad consequat aliquip occaecat esse ut quis enim nostrud et ex sint elit."
 }

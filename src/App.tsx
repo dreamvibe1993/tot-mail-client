@@ -16,8 +16,7 @@ import { MailClient } from "./components/MailClient/MailClient";
 
 /**
  * TODO:
- * сортировка
- * прочитанные и нет
+ * 404
  */
 
 function App() {
@@ -33,6 +32,9 @@ function App() {
           </Route>
           <Route path={"/mailbox"}>
             <MailClient />
+          </Route>
+          <Route>
+            <h1>404!</h1>
           </Route>
         </Switch>
       </div>

@@ -1,7 +1,7 @@
 {
   "id": "letter-8",
   "sender": {
-    "name": "Jane Doe",
+    "name": "Роскомнадзор",
     "email": "jane@doe.ua"
   },
   "recipient": {
@@ -13,6 +13,6 @@
   },
   "sentAt": "2022-07-12T08:19:34.336Z",
   "receivedAt": "2022-07-16T19:19:34.336Z",
-  "topic": "Happy birthday",
-  "message": "# Hafwfawf culpa ullamco enim cupidawfaat aliquip occaecat esse ut quis enim nostrud et ex sint elit."
+  "topic": "С проверкой",
+  "message": "Я пошутил))))"
 }

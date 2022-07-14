@@ -1,7 +1,7 @@
 {
   "id": "letter-10",
   "sender": {
-    "name": "Bar Doe",
+    "name": "один",
     "email": "Bar@doe.ua"
   },
   "recipient": {
@@ -14,5 +14,5 @@
   "sentAt": "2022-07-12T08:19:34.336Z",
   "receivedAt": "2022-07-12T23:19:34.336Z",
   "topic": "Happy sadness!",
-  "message": "# Hey Anthony! \nEiusmod eu nisi ullamco quis do. Consectetur laborum consectetur culpa ullamco enim cupidatat amet. \nUllamco veniam ad consequat aliquip occaecat esse ut quis enim nostrud et ex sint elit."
+  "message": "# Привет как дела?! \n Давно не виделись..."
 }
